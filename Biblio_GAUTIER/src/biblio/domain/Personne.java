@@ -2,17 +2,15 @@
 
 package biblio.domain;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class Personne 
 {
    private String nom;
    private String prenom;
    protected static DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-   private static LocalDate dateNaissance;
+   private LocalDate dateNaissance;
    private String sexe;
    
    /**
@@ -23,22 +21,22 @@ public class Personne
     
 	   this.nom = nom;
 	   this.prenom = prenom;
-	   this.dateNaissance = setDateNaissance(dateNaissance);
+	   setDateNaissance(dateNaissance);
 	   this.sexe = sexe;
    }
    
    public Personne (){
-		this("nom inconnu", "prenom inconnu",  "dateNaissance", "Sexe inconnu");
+		//this("nom inconnu", "prenom inconnu",  "dateNaissance", "Sexe inconnu");
 	}
 	
 	
 	
-	public static LocalDate getDateNaissance() {
+	public LocalDate getDateNaissance() {
 	return dateNaissance;
 }
 
-public static LocalDate setDateNaissance(String dateNaissance) {
-	return LocalDate.parse(dateNaissance,df);
+public LocalDate setDateNaissance(String dateNaissance) {
+	return LocalDate.parse(dateNaissance);
 }
 
 public String getSexe() {

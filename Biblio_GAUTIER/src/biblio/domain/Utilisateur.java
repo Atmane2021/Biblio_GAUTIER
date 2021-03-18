@@ -16,14 +16,14 @@ import biblio.dao.UtilisateursDao;
 
 public class Utilisateur extends Personne
 {
-	
+
 	private int idUtilisateur;
 	private String pwd;
 	private String pseudonyme;	
 	public static ArrayList<EmpruntEnCours> emprunt = new ArrayList<>();
 	public static DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy",Locale.FRANCE);
 	public EmpruntArchive stock;
-	
+	private EnumCategorieEmploye categorieEmploye;
 	
 
 
@@ -39,7 +39,13 @@ public class Utilisateur extends Personne
 	}
 	
 
-	
+
+	public Utilisateur() {
+		
+	}
+
+
+
 
 	@Override
 	public String toString() {
@@ -145,26 +151,7 @@ public class Utilisateur extends Personne
         emprunt.remove(j);
         
     }
-	public Utilisateur findByKey( int idUtilisateur){		
-		try {
-			UtilisateursDao utilisateurdao = new UtilisateursDao(PingJdbc.getConnectionByProperties());
-				return utilisateurdao.findByKey(idUtilisateur);
-		} catch (IOException e) {				
-			e.printStackTrace();
-		}			
-	return null;
-}
-public List<Utilisateur> findAll(){		
-	try {
-		UtilisateursDao utilisateurdao = new UtilisateursDao(PingJdbc.getConnectionByProperties());
-			return utilisateurdao.findAll();
-	} catch (IOException e) {				
-		e.printStackTrace();
-	}			
-return null;
-}
-
-
+	
 	public int getidUtilisateur() {return idUtilisateur;}
 	public String getpwd() {return pwd;}
 	public String getpseudonyme() {return pseudonyme;}

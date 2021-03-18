@@ -3,9 +3,11 @@ package biblio.domain;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 import biblio.dao.ExemplairesDao;
 import biblio.dao.PingJdbc;
@@ -14,11 +16,12 @@ public class Exemplaire {
 	private int idExemplaire;
 	private LocalDate dateAchat;
 	private EnumStatusExemplaire status;
-	private DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy",Locale.FRANCE );
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
 	private String isbn;
 	
 	public Exemplaire(int idExemplaire,String dateAchat,EnumStatusExemplaire status,String isbn) {
-		this.isbn=isbn;
+		this.setIsbn(isbn);
 		this.setIdExemplaire(idExemplaire);
 		this.setDateAchat(dateAchat);
 		this.setStatus(status);
@@ -30,7 +33,7 @@ public class Exemplaire {
 
 	@Override
 	public String toString() {
-		return "Exemplaire [idExemplaire = " + idExemplaire + ", dateAchat=" + dateAchat + ", status=" + status + ", isbn=" + isbn + "]";
+		return "Exemplaire [idExemplaire = " + idExemplaire + ", dateAchat=" + dateAchat.format(df) + ", status=" + status + ", isbn=" + isbn + "]";
 	}
 
 	public String getIsbn() {
@@ -43,7 +46,7 @@ public class Exemplaire {
 	}
 
 	public void setDateAchat(String dateAchat) {
-		this.dateAchat = LocalDate.parse(dateAchat,df);
+		this.dateAchat = LocalDate.parse(dateAchat);
 	}
 
 	public int getIdExemplaire() {
@@ -62,24 +65,10 @@ public class Exemplaire {
 		this.status=status;
 	}
 	
-	public Exemplaire findByKey( int idExemplaire){		
-			try {
-				ExemplairesDao exemplairedao = new ExemplairesDao(PingJdbc.getConnectionByProperties());
-					return exemplairedao.findByKey(idExemplaire);
-			} catch (IOException | SQLException e) {				
-				e.printStackTrace();
-			}			
-		return null;
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
-	public List<Exemplaire> findAll(){		
-		try {
-			ExemplairesDao exemplairedao = new ExemplairesDao(PingJdbc.getConnectionByProperties());
-				return exemplairedao.findall();
-		} catch (IOException | SQLException e) {				
-			e.printStackTrace();
-		}			
-	return null;
-}
 	
 	
 }

@@ -46,22 +46,23 @@ public class UtilisateursDao {
 			ResultSet result = pstm.executeQuery();
 			while (result.next()) {
 				id = result.getInt(1);
-				pwd = result.getString(4);
-				nom = result.getString(2);
-				prenom = result.getString(3);
+				pwd = result.getString(2);
+				nom = result.getString(3);
+				prenom = result.getString(4
+						);
 				cat = result.getString(8);
 				pseudo = result.getString(5);
 				dn = result.getDate(6).toString();
 				sex = result.getString(7);
 				
 				if (cat.equals("ADHERENT")) {
-					tel = result.getString(6);
+					tel = result.getString(9);
 					
 					user = new Adherent(id,nom, prenom,  pwd,pseudo,dn,sex,cat, tel);
 				}
 				if (cat.equals("EMPLOYE")) {
-					code = result.getString(7);
-					cat_employe = result.getString(8);
+					code = result.getString(10);
+					cat_employe = result.getString(11);
 					EnumCategorieEmploye cat2 = EnumCategorieEmploye.valueOf(cat_employe.toLowerCase());
 					user = new Employe(id,nom, prenom, dn,sex, pwd, pseudo,code, cat2);
 				}
@@ -93,7 +94,7 @@ public class UtilisateursDao {
 		try {
 			Statement stm = con.createStatement();
 			ResultSet result = stm
-					.executeQuery("select utilisateur.idutilisateur, utilisateur.pwd, utilisateur.nom, utilisateur.prenom, categorie_utilisateur, telephone, codematricule, categorieemploye "
+					.executeQuery("select utilisateur.idutilisateur, utilisateur.pwd, utilisateur.nom, utilisateur.prenom, utilisateur.pseudonyme, utilisateur.datenaissance, utilisateur.sexe, categorieutilisateur, telephone, codematricule, categorieemploye "
 							+ "from utilisateur, adherent, employe "
 							+ "where utilisateur.idutilisateur=adherent.idutilisateur (+) "
 							+ "and utilisateur.idutilisateur=employe.idutilisateur (+)");
@@ -102,17 +103,17 @@ public class UtilisateursDao {
 				pwd = result.getString(2);
 				nom = result.getString(3);
 				prenom = result.getString(4);
-				cat = result.getString(5);
+				cat = result.getString(8);
 				pseudo = result.getString(5);
 				dn = result.getDate(6).toString();
 				sex = result.getString(7);
 				if (cat.equals("ADHERENT")) {
-					tel = result.getString(6);
+					tel = result.getString(9);
 					user = new Adherent(id,nom, prenom,  pwd,pseudo,dn,sex,cat, tel);
 				}
 				if (cat.equals("EMPLOYE")) {
-					code = result.getString(7);
-					cat_employe = result.getString(8);
+					code = result.getString(10);
+					cat_employe = result.getString(11);					
 					EnumCategorieEmploye cat2 = EnumCategorieEmploye.valueOf(cat_employe.toLowerCase());
 					user = new Employe(id,nom, prenom, dn,sex, pwd, pseudo,code, cat2);
 				}

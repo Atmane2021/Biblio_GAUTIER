@@ -23,7 +23,7 @@ public Exemplaire findByKey(int idExemplaire) throws SQLException
 {
 	Statement stmt1 = cnx1.createStatement();
 	ResultSet rs2 = stmt1.executeQuery(
-			"select idexemplaire,status, dateachat "+
+			"select idexemplaire,status, dateachat,isbn "+
 			" FROM exemplaire where idexemplaire = " + idExemplaire);			
 	Exemplaire ex = null;
 	
@@ -37,10 +37,11 @@ public Exemplaire findByKey(int idExemplaire) throws SQLException
 		int idexemplaire = rs2.getInt("idexemplaire"); // corrigé !!!
 		String status = rs2.getString("status");
 		String dateachat=rs2.getDate("dateachat").toString(); // corrigé !!!
+		String isbn = rs2.getString("isbn");
 		EnumStatusExemplaire enumStatus = EnumStatusExemplaire.valueOf(status);
 		//Livre livre = null; // Lazy-loading //chargement tardif
 			
-		ex = new Exemplaire( idexemplaire, dateachat, enumStatus, status); //ici, mapping Objet Relationel
+		ex = new Exemplaire( idexemplaire, dateachat, enumStatus, isbn); //ici, mapping Objet Relationel
 	}
 	else {
 		ex = null;
@@ -51,7 +52,7 @@ public Exemplaire findByKey(int idExemplaire) throws SQLException
 		
 }
 	
-public ArrayList<Exemplaire> findall() throws SQLException
+public ArrayList<Exemplaire> findAll() throws SQLException
 {
 	Statement stmt1 = cnx1.createStatement();
 	ArrayList <Exemplaire> listeExemplaire= new ArrayList<Exemplaire>();
@@ -60,13 +61,13 @@ public ArrayList<Exemplaire> findall() throws SQLException
 		
 		int idexemplaire = rs3.getInt(1); //  corrigé
 		String dateachat=rs3.getDate(2).toString(); // corrigé !!!
-		
+		String isbn = rs3.getString(4);
 		String status = rs3.getString(3);
 		EnumStatusExemplaire enstex = EnumStatusExemplaire.valueOf(status);
 		
 		//System.out.println("ID Exemplaire : " + idexemplaire +" Status : "+ status );
 		//Livre livre=new Livre();
-		Exemplaire ex = new Exemplaire(idexemplaire,dateachat,enstex,status);//mapping Objet Relationel
+		Exemplaire ex = new Exemplaire(idexemplaire,dateachat,enstex,isbn);//mapping Objet Relationel
 		listeExemplaire.add(ex);
 		
 	}
