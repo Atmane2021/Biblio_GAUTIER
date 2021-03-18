@@ -24,6 +24,9 @@ public class Exemplaire {
 		this.setStatus(status);
 		
 	}
+	public Exemplaire() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public String toString() {

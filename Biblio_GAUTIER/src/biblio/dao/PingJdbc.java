@@ -22,7 +22,7 @@ public class PingJdbc {
 
 		public static Connection getConnectionByProperties() throws IOException, FileNotFoundException{
 	      Properties properties = new Properties();
-	      FileInputStream input = new FileInputStream("src\\DAO\\jdbc.properties");
+	      FileInputStream input = new FileInputStream("src\\biblio\\DAO\\jdbc.properties");
 	      try{
 	         properties.load(input);
 	      }finally{
@@ -40,8 +40,8 @@ public class PingJdbc {
 
 	 		//Ouvrir une connexion 
 
-	 		try( Connection cnx = DriverManager.getConnection(properties.getProperty("url"), properties.getProperty("user"), properties.getProperty("pwd"))) {
-	 			
+	 		try {
+	 			Connection cnx = DriverManager.getConnection(properties.getProperty("url"), properties.getProperty("user"), properties.getProperty("pwd"));
 	 			cnx.setAutoCommit(false);
 	 			return cnx;
 	 			

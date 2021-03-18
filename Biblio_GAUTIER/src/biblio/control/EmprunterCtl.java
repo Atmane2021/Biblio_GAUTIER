@@ -15,7 +15,7 @@ public class EmprunterCtl {
 	public static void main(String[] args) {
 
 		System.out.println("-------------Test 3.1 : Retour d'un exemplaire par son ID-----------------------");
-		Exemplaire exemplaire1 = null;
+		Exemplaire exemplaire1 = new Exemplaire();
 		String i = JOptionPane.showInputDialog(null, "Entrez l'ID de l'exemplaire : ","Recherche d'un exemplaire", JOptionPane.INFORMATION_MESSAGE);
 		System.out.println(exemplaire1.findByKey(Integer.parseInt(i)).toString());
 		
