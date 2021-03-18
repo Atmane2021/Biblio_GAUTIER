@@ -63,7 +63,7 @@ public class UtilisateursDao {
 					code = result.getString(7);
 					cat_employe = result.getString(8);
 					EnumCategorieEmploye cat2 = EnumCategorieEmploye.valueOf(cat_employe.toLowerCase());
-					user = new Employe(nom, prenom, id, pwd, code, cat2);
+					user = new Employe(id,nom, prenom, dn,sex, pwd, pseudo,code, cat2);
 				}
 
 			}
@@ -114,7 +114,7 @@ public class UtilisateursDao {
 					code = result.getString(7);
 					cat_employe = result.getString(8);
 					EnumCategorieEmploye cat2 = EnumCategorieEmploye.valueOf(cat_employe.toLowerCase());
-					user = new Employe(nom, prenom, id, pwd, code, cat2);
+					user = new Employe(id,nom, prenom, dn,sex, pwd, pseudo,code, cat2);
 				}
 
 				listUtilisateur.add(user);

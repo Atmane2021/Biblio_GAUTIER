@@ -1,11 +1,18 @@
 package biblio.domain;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.JOptionPane;
+
+import biblio.dao.ExemplairesDao;
+import biblio.dao.PingJdbc;
+import biblio.dao.UtilisateursDao;
 
 public class Utilisateur extends Personne
 {
@@ -138,6 +145,24 @@ public class Utilisateur extends Personne
         emprunt.remove(j);
         
     }
+	public Utilisateur findByKey( int idUtilisateur){		
+		try {
+			UtilisateursDao utilisateurdao = new UtilisateursDao(PingJdbc.getConnectionByProperties());
+				return utilisateurdao.findByKey(idUtilisateur);
+		} catch (IOException e) {				
+			e.printStackTrace();
+		}			
+	return null;
+}
+public List<Utilisateur> findAll(){		
+	try {
+		UtilisateursDao utilisateurdao = new UtilisateursDao(PingJdbc.getConnectionByProperties());
+			return utilisateurdao.findAll();
+	} catch (IOException e) {				
+		e.printStackTrace();
+	}			
+return null;
+}
 
 
 	public int getidUtilisateur() {return idUtilisateur;}

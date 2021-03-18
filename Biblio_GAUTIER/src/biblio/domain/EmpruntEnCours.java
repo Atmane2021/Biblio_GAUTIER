@@ -2,10 +2,17 @@
 
 package biblio.domain;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import biblio.dao.EmpruntEnCoursDao;
+import biblio.dao.EmpruntEnCoursDb;
+import biblio.dao.PingJdbc;
+import biblio.dao.UtilisateursDao;
 
 public class EmpruntEnCours
 {
@@ -58,6 +65,26 @@ public LocalDate getDateEmprunt() {
 	return dateEmprunt;
 }
    
-   
+public boolean insertEmpruntEnCours(EmpruntEnCours emprunt) {
+	return true;
+}
+public EmpruntEnCoursDb findByKey( int idexemplaire){		
+	try {
+		EmpruntEnCoursDao empruntencoursdao = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
+			return empruntencoursdao.findByKey(idexemplaire);
+	} catch (IOException | SQLException e) {				
+		e.printStackTrace();
+	}			
+return null;
+}
+public List<EmpruntEnCoursDb> findByUtilisateur( Utilisateur u){		
+	try {
+		EmpruntEnCoursDao empruntencoursdao2 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
+			return empruntencoursdao2.findByUtilisateur(u);
+	} catch (IOException e) {				
+		e.printStackTrace();
+	}			
+return null;
+}
    
 }

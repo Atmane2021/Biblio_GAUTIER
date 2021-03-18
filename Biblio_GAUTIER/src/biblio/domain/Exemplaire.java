@@ -1,7 +1,14 @@
 package biblio.domain;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import biblio.dao.ExemplairesDao;
+import biblio.dao.PingJdbc;
 
 public class Exemplaire {
 	private int idExemplaire;
@@ -52,13 +59,24 @@ public class Exemplaire {
 		this.status=status;
 	}
 	
-//	public boolean dispoinibilite(EnumStatusExemplaire status)
-//	{
-//		for (status.DISPONIBLE)
-//		{
-//			
-//		}
-//	}
+	public Exemplaire findByKey( int idExemplaire){		
+			try {
+				ExemplairesDao exemplairedao = new ExemplairesDao(PingJdbc.getConnectionByProperties());
+					return exemplairedao.findByKey(idExemplaire);
+			} catch (IOException | SQLException e) {				
+				e.printStackTrace();
+			}			
+		return null;
+	}
+	public List<Exemplaire> findAll(){		
+		try {
+			ExemplairesDao exemplairedao = new ExemplairesDao(PingJdbc.getConnectionByProperties());
+				return exemplairedao.findall();
+		} catch (IOException | SQLException e) {				
+			e.printStackTrace();
+		}			
+	return null;
+}
 	
 	
 }

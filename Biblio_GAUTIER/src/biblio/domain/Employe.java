@@ -8,7 +8,7 @@ public class Employe extends Utilisateur
 	private EnumCategorieEmploye categorieEmploye;
 	
 	
-	public Employe(String nom, String prenom,String dateNaissance,String sexe, int idUtilisateur,String pwd, String pseudonyme, String codeMatricule, EnumCategorieEmploye categorieEmploye)
+	public Employe(int idUtilisateur,String nom, String prenom,String dateNaissance,String sexe, String pwd, String pseudonyme, String codeMatricule, EnumCategorieEmploye categorieEmploye)
 	{
 		super(nom, prenom, dateNaissance,sexe, idUtilisateur,pwd, pseudonyme);
 		this.codeMatricule = codeMatricule;

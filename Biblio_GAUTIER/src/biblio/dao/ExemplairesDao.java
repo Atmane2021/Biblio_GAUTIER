@@ -11,15 +11,15 @@ import biblio.domain.EnumStatusExemplaire;
 import biblio.domain.Exemplaire;
 
 
-public class ExemplairesDAO {
+public class ExemplairesDao {
 
 	Connection cnx1 = null;
 	
-public ExemplairesDAO(Connection cnx1) {
+public ExemplairesDao(Connection cnx1) {
 		this.cnx1=cnx1;
 	}
 
-public Exemplaire findByKey(String idExemplaire) throws SQLException
+public Exemplaire findByKey(int idExemplaire) throws SQLException
 {
 	Statement stmt1 = cnx1.createStatement();
 	ResultSet rs2 = stmt1.executeQuery(
