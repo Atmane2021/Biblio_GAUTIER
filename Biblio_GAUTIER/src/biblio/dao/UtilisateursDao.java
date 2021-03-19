@@ -1,7 +1,6 @@
 package biblio.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +18,10 @@ public class UtilisateursDao {
 
 	public UtilisateursDao(Connection con) {
 		this.con = con;
+	}
+
+	public UtilisateursDao() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Utilisateur findByKey(int idUser) {
@@ -48,8 +51,7 @@ public class UtilisateursDao {
 				id = result.getInt(1);
 				pwd = result.getString(2);
 				nom = result.getString(3);
-				prenom = result.getString(4
-						);
+				prenom = result.getString(4);
 				cat = result.getString(8);
 				pseudo = result.getString(5);
 				dn = result.getDate(6).toString();
@@ -63,7 +65,7 @@ public class UtilisateursDao {
 				if (cat.equals("EMPLOYE")) {
 					code = result.getString(10);
 					cat_employe = result.getString(11);
-					EnumCategorieEmploye cat2 = EnumCategorieEmploye.valueOf(cat_employe.toLowerCase());
+					EnumCategorieEmploye cat2 = EnumCategorieEmploye.valueOf(cat_employe);
 					user = new Employe(id,nom, prenom, dn,sex, pwd, pseudo,code, cat2);
 				}
 
@@ -114,7 +116,7 @@ public class UtilisateursDao {
 				if (cat.equals("EMPLOYE")) {
 					code = result.getString(10);
 					cat_employe = result.getString(11);					
-					EnumCategorieEmploye cat2 = EnumCategorieEmploye.valueOf(cat_employe.toLowerCase());
+					EnumCategorieEmploye cat2 = EnumCategorieEmploye.valueOf(cat_employe);
 					user = new Employe(id,nom, prenom, dn,sex, pwd, pseudo,code, cat2);
 				}
 

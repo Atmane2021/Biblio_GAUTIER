@@ -1,14 +1,14 @@
 package biblio.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 import biblio.domain.EmpruntEnCours;
-import biblio.domain.EnumStatusExemplaire;
-import biblio.domain.Exemplaire;
 import biblio.domain.Utilisateur;
 
 public class EmpruntEnCoursDao {
@@ -16,6 +16,18 @@ public class EmpruntEnCoursDao {
 	public EmpruntEnCoursDao(Connection cnx3) {
 		this.cnx3=cnx3;
 	}
+	
+	public boolean insertEmpruntEnCours( EmpruntEnCours emprunt ) throws SQLException {
+		
+		PreparedStatement pstmt = cnx3.prepareStatement("INSERT INTO EMPRUNTENCOURS VALUES (?, ?, TO_DATE(?, 'YYYY-MM-DD'))");
+		pstmt.setInt(1,emprunt.getExemplaire().getIdExemplaire());
+		pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
+		pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
+		int i = pstmt.executeUpdate();
+		return true;
+	}
+	
+	
 	public EmpruntEnCoursDb findByKey(int idExemplaire) throws SQLException
 	{
 		Statement stmt3 = cnx3.createStatement();

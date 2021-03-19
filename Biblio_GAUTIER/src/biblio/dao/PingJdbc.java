@@ -42,7 +42,7 @@ public class PingJdbc {
 
 	 		try {
 	 			Connection cnx = DriverManager.getConnection(properties.getProperty("url"), properties.getProperty("user"), properties.getProperty("pwd"));
-	 			cnx.setAutoCommit(false);
+	 			cnx.setAutoCommit(true);
 	 			
 	 			return cnx;
 	 			

@@ -22,12 +22,11 @@ public class EmpruntEnCours
    private Exemplaire exemplaire;
    
    
-   public EmpruntEnCours(Utilisateur ut,Exemplaire exemp, String dateEmp) 
+   public EmpruntEnCours(Utilisateur ut,Exemplaire exemp) 
    {
 	   setEmprunteur(ut);
 	   setExemplaire(exemp);
-	   setDateEmprunt(dateEmp);
-	   
+	   setDateEmprunt(LocalDate.now().format(df));
    }
    
    @Override

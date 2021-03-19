@@ -1,7 +1,5 @@
 package biblio.domain;
 
-import java.util.Date;
-
 public class Employe extends Utilisateur
 {
 	private String codeMatricule;
@@ -10,15 +8,15 @@ public class Employe extends Utilisateur
 	
 	public Employe(int idUtilisateur,String nom, String prenom,String dateNaissance,String sexe, String pwd, String pseudonyme, String codeMatricule, EnumCategorieEmploye categorieEmploye)
 	{
-		super(nom, prenom, dateNaissance,sexe, idUtilisateur,pwd, pseudonyme);
-		this.codeMatricule = codeMatricule;
-		this.categorieEmploye = categorieEmploye;
+		super(idUtilisateur,nom, prenom, dateNaissance,sexe,pwd, pseudonyme);
+		setCodeMatricule(codeMatricule);
+		setCategorieEmploye(categorieEmploye);
 	}
 
 
 	@Override
 	public String toString() {
-		return super.toString()+"  Matricule = " + codeMatricule + ", categorie de l'employe = " + categorieEmploye + ".";
+		return super.toString()+"  Matricule = " + codeMatricule + ".";
 	}
 
 

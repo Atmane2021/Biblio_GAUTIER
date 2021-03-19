@@ -19,6 +19,10 @@ public ExemplairesDao(Connection cnx1) {
 		this.cnx1=cnx1;
 	}
 
+public ExemplairesDao() {
+	// TODO Auto-generated constructor stub
+}
+
 public Exemplaire findByKey(int idExemplaire) throws SQLException
 {
 	Statement stmt1 = cnx1.createStatement();

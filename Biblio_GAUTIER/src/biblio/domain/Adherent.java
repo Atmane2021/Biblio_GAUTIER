@@ -1,28 +1,29 @@
 package biblio.domain;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 public class Adherent extends Utilisateur
 {
 	private String telephone;
+	private String cat;
 	private int nbMaxPrets = 3;
 	private int dureeMaxPrets =15;
 		
 	public Adherent(int idUtilisateur,String nom, String prenom,String pwd,String pseudonyme,String dateNaissance,String sexe,String cat, String telephone)
 	{
-		super(nom, prenom, dateNaissance,sexe, idUtilisateur,pwd, pseudonyme);
-		this.telephone = telephone;
-		this.dureeMaxPrets = dureeMaxPrets;
+		super(idUtilisateur,nom, prenom, dateNaissance,sexe, pwd, pseudonyme);
+		setCategorieUtilisateur(cat);
+		setTelephone(telephone);
+		setCat(cat);
+		
 	}
 
 	
 	@Override
 	public String toString() {
-		return "Nom = " + getNom() + ", Prenom = " + getPrenom()+ " numero de telephone = " + telephone + ", id de l'utilisateur = " + getidUtilisateur() + ", pseudo = " + getpseudonyme() + ", genre = "
-				+ getSexe() + ".";
+		return "Categorie d'utilisateur = " + getCat()+", Nom = " + getNom() + ", Prenom = " + getPrenom()+ " numero de telephone = " + telephone + ", id de l'utilisateur = " + getidUtilisateur() + ", pseudo = " + getpseudonyme() + ", genre = "
+				+ getSexe() +".";
 	}
 
 
@@ -89,8 +90,15 @@ public class Adherent extends Utilisateur
 		
 	}
 	
-	public static void main(String[] args) {
-		
-		
+	public String getCat() {
+		return cat;
 	}
+
+
+	public void setCat(String cat) {
+		this.cat = cat;
+	}
+
+
+	
 }

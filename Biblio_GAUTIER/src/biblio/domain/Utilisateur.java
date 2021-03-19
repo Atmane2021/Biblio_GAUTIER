@@ -24,17 +24,16 @@ public class Utilisateur extends Personne
 	public static DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy",Locale.FRANCE);
 	public EmpruntArchive stock;
 	private EnumCategorieEmploye categorieEmploye;
-	
+	private String categorieUtilisateur = " EMPLOYE";
 
 
 
-
-	public Utilisateur(String nom, String prenom, String dateNaissance, String sexe,int idUtilisateur, String pwd, String pseudonyme)
+	public Utilisateur(int idUtilisateur,String nom, String prenom, String dateNaissance, String sexe, String pwd, String pseudonyme)
 	{
 		super(nom,prenom, dateNaissance, sexe);
-		this.idUtilisateur = idUtilisateur;
-		this.pwd = pwd;
-		this.pseudonyme = pseudonyme;
+		setidUtilisateur(idUtilisateur);
+		setpwd(pwd);
+		setpseudonyme(pseudonyme);
 
 	}
 	
@@ -44,16 +43,20 @@ public class Utilisateur extends Personne
 		
 	}
 
-
+  
 
 
 	@Override
 	public String toString() {
-		return "Nom = " + getNom() + ", Prenom = " + getPrenom() +  ", genre = " + getSexe()+", identifiant de l'utilisateur = " + idUtilisateur + ", mot de passe= " + pwd + ", pseudo = " + pseudonyme;
+		return "Catégorie d'utilisateur ="+getCategorieUtilisateur()+", Nom =" + getNom() + ", Prenom =" + getPrenom() + ", EmpruntenCours ="
+				+ getEmpruntenCours() + ", idUtilisateur =" + getidUtilisateur() + ", pwd =" + getpwd()
+				+ ", pseudonyme =" + getpseudonyme() + ", CategorieEmploye =" + getCategorieEmploye()
+				+ ", DateNaissance =" + getDateNaissance() + ", Sexe =" + getSexe();
 	}
 
 
-    public static ArrayList<EmpruntEnCours> getEmprunt() {
+
+	public static ArrayList<EmpruntEnCours> getEmprunt() {
 		return emprunt;
 	}
 
@@ -160,6 +163,30 @@ public class Utilisateur extends Personne
 	public void setpwd(String pwd) {this.pwd = pwd;}
 	public void setpseudonyme(String pseudonyme) {this.pseudonyme = pseudonyme;}
 	
+	public EnumCategorieEmploye getCategorieEmploye() {
+		return categorieEmploye;
+	}
+
+
+
+	public void setCategorieEmploye(EnumCategorieEmploye categorieEmploye) {
+		this.categorieEmploye = categorieEmploye;
+	}
+
+
+
+	public String getCategorieUtilisateur() {
+		return categorieUtilisateur;
+	}
+
+
+
+	public void setCategorieUtilisateur(String categorieUtilisateur) {
+		this.categorieUtilisateur = categorieUtilisateur;
+	}
+
+
+
 	public static void main(String[] args) {
 		
 	}
