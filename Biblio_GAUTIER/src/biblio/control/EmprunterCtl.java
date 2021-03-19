@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
@@ -53,12 +54,23 @@ public class EmprunterCtl {
 		String b = JOptionPane.showInputDialog(null, "Entrez l'ID de l'exemplaire emprunté ( de 1 à 8 ): ","Réalisation d'un emprunt", JOptionPane.INFORMATION_MESSAGE);
 		EmpruntEnCoursDao eecd = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
 		eecd.insertEmpruntEnCours(new EmpruntEnCours(utilisateur2.findByKey(Integer.parseInt(a)),exemplaire2.findByKey(Integer.parseInt(b))));
+		EmpruntEnCoursDao eecd3 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
+		System.out.println("Liste des emprunts en cours de l'emprunteur "+a+" : \n");
+		for(EmpruntEnCoursDb v : eecd3.findByUtilisateur(utilisateur2.findByKey(Integer.parseInt(a)))) {
+			System.out.println("Exemplaire id : "+v.getIdUtil()+"\n");
+		}
+		
 		
 		String c = JOptionPane.showInputDialog(null, "Entrez l'ID de l'emprunteur (ex Adherent = 1,4,4,7,8) : ","Réalisation d'un emprunt", JOptionPane.INFORMATION_MESSAGE);
 		String d = JOptionPane.showInputDialog(null, "Entrez l'ID de l'exemplaire emprunté ( de 1 à 8 ): ","Réalisation d'un emprunt", JOptionPane.INFORMATION_MESSAGE);
 		EmpruntEnCoursDao eecd2 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
 		eecd2.insertEmpruntEnCours(new EmpruntEnCours(utilisateur2.findByKey(Integer.parseInt(c)),exemplaire2.findByKey(Integer.parseInt(d))));		
 		
+		EmpruntEnCoursDao eecd4 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
+		System.out.println("Liste des emprunts en cours de l'emprunteur "+b+" : \n");
+		for(EmpruntEnCoursDb w : eecd4.findByUtilisateur(utilisateur2.findByKey(Integer.parseInt(b)))) {
+			System.out.println("Exemplaire id : "+w.getIdUtil()+"\n");
+		}
 		
 //		System.out.println("\n-------------Test 4.2 : Retour de tous les utilisateurs-----------------------");
 //		int l = JOptionPane.showConfirmDialog(null, "Voulez-vous voir tous les utilisateurs ?","Recherche de tous les utilisateurs",JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);

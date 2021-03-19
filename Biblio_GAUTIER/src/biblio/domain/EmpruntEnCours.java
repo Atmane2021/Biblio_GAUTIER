@@ -67,23 +67,6 @@ public LocalDate getDateEmprunt() {
 public boolean insertEmpruntEnCours(EmpruntEnCours emprunt) {
 	return true;
 }
-public EmpruntEnCoursDb findByKey( int idexemplaire){		
-	try {
-		EmpruntEnCoursDao empruntencoursdao = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
-			return empruntencoursdao.findByKey(idexemplaire);
-	} catch (IOException | SQLException e) {				
-		e.printStackTrace();
-	}			
-return null;
-}
-public List<EmpruntEnCoursDb> findByUtilisateur( Utilisateur u){		
-	try {
-		EmpruntEnCoursDao empruntencoursdao2 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
-			return empruntencoursdao2.findByUtilisateur(u);
-	} catch (IOException e) {				
-		e.printStackTrace();
-	}			
-return null;
-}
+
    
 }

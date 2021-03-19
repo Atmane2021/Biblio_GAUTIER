@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import biblio.domain.EmpruntEnCours;
 import biblio.domain.Utilisateur;
@@ -19,12 +22,28 @@ public class EmpruntEnCoursDao {
 	
 	public boolean insertEmpruntEnCours( EmpruntEnCours emprunt ) throws SQLException {
 		
-		PreparedStatement pstmt = cnx3.prepareStatement("INSERT INTO EMPRUNTENCOURS VALUES (?, ?, TO_DATE(?, 'YYYY-MM-DD'))");
-		pstmt.setInt(1,emprunt.getExemplaire().getIdExemplaire());
-		pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
-		pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
-		int i = pstmt.executeUpdate();
-		return true;
+		Statement stmt = cnx3.createStatement();
+		ResultSet rs = stmt.executeQuery("SELECT STATUS FROM EXEMPLAIRE WHERE idexemplaire ="+emprunt.getExemplaire().getIdExemplaire());
+		rs.next();
+		if (rs.getString(1).equalsIgnoreCase("DISPONIBLE")) {
+		
+			PreparedStatement pstmt = cnx3.prepareStatement("INSERT INTO EMPRUNTENCOURS VALUES (?, ?, TO_DATE(?, 'YYYY-MM-DD'))");
+			pstmt.setInt(1,emprunt.getExemplaire().getIdExemplaire());
+			pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
+			pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
+			pstmt.executeUpdate();
+			rs.close();
+			stmt.close();
+			pstmt.close();
+			cnx3.close();
+			return true;
+		}else {
+			JOptionPane.showMessageDialog(null, "Désolé mais l'exemplaire demandé est "+rs.getString(1), "Disponibilité de l'exemplaire demandé", JOptionPane.WARNING_MESSAGE);
+			rs.close();
+			stmt.close();
+			cnx3.close();
+			return false;
+		}
 	}
 	
 	
@@ -52,10 +71,25 @@ public class EmpruntEnCoursDao {
 		return ex;
 			
 	}
-	public List<EmpruntEnCoursDb> findByUtilisateur(Utilisateur u) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	
+	public List<EmpruntEnCoursDb> findByUtilisateur(Utilisateur u) throws SQLException {
+		Statement stmt4 = cnx3.createStatement();
+		List<EmpruntEnCoursDb> listeEmpruntEnCoursDb = new ArrayList<EmpruntEnCoursDb>();
+		ResultSet rs4 = stmt4.executeQuery("select * FROM empruntencours where idutilisateur = "+u.getidUtilisateur());			
+		while( rs4.next()){
+			
+			int idexemplaire = rs4.getInt(1);
+			int idutilisateur = rs4.getInt(2);
+
+			EmpruntEnCoursDb ex2 = new EmpruntEnCoursDb(idexemplaire,idutilisateur);//mapping Objet Relationel
+			listeEmpruntEnCoursDb.add(ex2);
+			
+		}
+		
+		return listeEmpruntEnCoursDb;
 	}
+	
 	
 
 	
