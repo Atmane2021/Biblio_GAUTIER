@@ -16,7 +16,7 @@ public class Exemplaire {
 	private int idExemplaire;
 	private LocalDate dateAchat;
 	private EnumStatusExemplaire status;
-	private DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy",Locale.FRANCE );
+	public DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy",Locale.FRANCE );
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
 	private String isbn;
 	

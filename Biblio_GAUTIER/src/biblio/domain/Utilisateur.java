@@ -105,8 +105,7 @@ public class Utilisateur extends Personne
 	public void addEmpruntEnCours (EmpruntEnCours ep) throws Exception
 	{
 		
-			//System.out.println("je passe par utilisateur");
-			 emprunt.add(ep);
+			emprunt.add(ep);
 			 
 	}
 
@@ -115,8 +114,6 @@ public class Utilisateur extends Personne
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 
 	public ArrayList<EmpruntEnCours> getEmpruntenCours()

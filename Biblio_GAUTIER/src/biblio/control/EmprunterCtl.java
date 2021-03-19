@@ -34,20 +34,22 @@ public class EmprunterCtl {
 		if(PingJdbc.getConnectionByProperties() != null) JOptionPane.showMessageDialog(null, "Vous êtes connecté(e) à la base de données de la bibliothèque avec le user : "+properties.getProperty("user"), "Etat de la connection à la base de données" , JOptionPane.INFORMATION_MESSAGE);
 		
 		
-		System.out.println("\n\n-------------Test 2.2 : Demande des objets aux DAO-----------------------\n\n");
-		ExemplairesDao exemplaire1 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
-		
-		String h = JOptionPane.showInputDialog(null, "Entrez l'ID de l'exemplaire ( de 1 à 8 ): ","Recherche d'un exemplaire", JOptionPane.INFORMATION_MESSAGE);
-		System.out.println("Première demande : "+exemplaire1.findByKey(Integer.parseInt(h)));
-		String i = JOptionPane.showInputDialog(null, "Entrez l'ID de l'exemplaire ( de 1 à 8 ): ","Recherche d'un exemplaire", JOptionPane.INFORMATION_MESSAGE);
-		System.out.println("Deuxième demande : "+exemplaire1.findByKey(Integer.parseInt(i)));
-		UtilisateursDao utilisateur1 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
-		String k = JOptionPane.showInputDialog(null, "Entrez l'ID de l'utilisateur que vous souhaitez consulter (ex Adherent = 1,4,5,7,8,9) : ","Recherche d'un utilisateur", JOptionPane.INFORMATION_MESSAGE); 
-		System.out.println("Troisième demande : "+utilisateur1.findByKey(Integer.parseInt(k)).toString());
-		String f = JOptionPane.showInputDialog(null, "Entrez l'ID de l'utilisateur que vous souhaitez consulter (ex Employe = 2,3,6) : ","Recherche d'un utilisateur", JOptionPane.INFORMATION_MESSAGE);
-		System.out.println("Troisième demande : "+utilisateur1.findByKey(Integer.parseInt(f)).toString());
-		
+//		System.out.println("\n\n-------------Test 2.2 : Demande des objets aux DAO-----------------------\n\n");
+//		
+//		ExemplairesDao exemplaire1 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
+//		
+//		String h = JOptionPane.showInputDialog(null, "Entrez l'ID de l'exemplaire ( de 1 à 8 ): ","Recherche d'un exemplaire", JOptionPane.INFORMATION_MESSAGE);
+//		System.out.println("Première demande : "+exemplaire1.findByKey(Integer.parseInt(h)));
+//		String i = JOptionPane.showInputDialog(null, "Entrez l'ID de l'exemplaire ( de 1 à 8 ): ","Recherche d'un exemplaire", JOptionPane.INFORMATION_MESSAGE);
+//		System.out.println("Deuxième demande : "+exemplaire1.findByKey(Integer.parseInt(i)));
+//		UtilisateursDao utilisateur1 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
+//		String k = JOptionPane.showInputDialog(null, "Entrez l'ID de l'utilisateur que vous souhaitez consulter (ex Adherent = 1,4,5,7,8,9) : ","Recherche d'un utilisateur", JOptionPane.INFORMATION_MESSAGE); 
+//		System.out.println("Troisième demande : "+utilisateur1.findByKey(Integer.parseInt(k)).toString());
+//		String f = JOptionPane.showInputDialog(null, "Entrez l'ID de l'utilisateur que vous souhaitez consulter (ex Employe = 2,3,6) : ","Recherche d'un utilisateur", JOptionPane.INFORMATION_MESSAGE);
+//		System.out.println("Troisième demande : "+utilisateur1.findByKey(Integer.parseInt(f)).toString());
+//		
 		System.out.println("\n-------------Test 2.3 :Création d'un emprunt en cours pour un Employé-----------------------");
+		
 		UtilisateursDao utilisateur2 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
 		ExemplairesDao exemplaire2 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
 		String a = JOptionPane.showInputDialog(null, "Entrez l'ID de l'emprunteur (ex Employe = 2,3,6) : ","Réalisation d'un emprunt", JOptionPane.INFORMATION_MESSAGE);
@@ -58,21 +60,22 @@ public class EmprunterCtl {
 		System.out.println("Liste des emprunts en cours de l'emprunteur "+a+" : \n");
 		for(EmpruntEnCoursDb v : eecd3.findByUtilisateur(utilisateur2.findByKey(Integer.parseInt(a)))) {
 			System.out.println("Exemplaire id : "+v.getIdUtil()+"\n");
-		}
+		}		
 		
+		System.out.println("\n-------------Test 2.4 :Création d'un emprunt en cours pour un Adhérent-----------------------");
 		
-		String c = JOptionPane.showInputDialog(null, "Entrez l'ID de l'emprunteur (ex Adherent = 1,4,4,7,8) : ","Réalisation d'un emprunt", JOptionPane.INFORMATION_MESSAGE);
+		String c = JOptionPane.showInputDialog(null, "Entrez l'ID de l'emprunteur (ex Adherent = 1,4,5,7,8) : ","Réalisation d'un emprunt", JOptionPane.INFORMATION_MESSAGE);
 		String d = JOptionPane.showInputDialog(null, "Entrez l'ID de l'exemplaire emprunté ( de 1 à 8 ): ","Réalisation d'un emprunt", JOptionPane.INFORMATION_MESSAGE);
 		EmpruntEnCoursDao eecd2 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
 		eecd2.insertEmpruntEnCours(new EmpruntEnCours(utilisateur2.findByKey(Integer.parseInt(c)),exemplaire2.findByKey(Integer.parseInt(d))));		
 		
 		EmpruntEnCoursDao eecd4 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
-		System.out.println("Liste des emprunts en cours de l'emprunteur "+b+" : \n");
-		for(EmpruntEnCoursDb w : eecd4.findByUtilisateur(utilisateur2.findByKey(Integer.parseInt(b)))) {
+		System.out.println("Liste des emprunts en cours de l'emprunteur "+c+" : \n");
+		for(EmpruntEnCoursDb w : eecd4.findByUtilisateur(utilisateur2.findByKey(Integer.parseInt(c)))) {
 			System.out.println("Exemplaire id : "+w.getIdUtil()+"\n");
 		}
 		
-//		System.out.println("\n-------------Test 4.2 : Retour de tous les utilisateurs-----------------------");
+//		System.out.println("\n-------------Test 3.1 : Retour de tous les utilisateurs-----------------------");
 //		int l = JOptionPane.showConfirmDialog(null, "Voulez-vous voir tous les utilisateurs ?","Recherche de tous les utilisateurs",JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 //		if (l==0) {
 //			for(Utilisateur p : utilisateur1.findAll()){

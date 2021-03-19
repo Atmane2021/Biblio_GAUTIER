@@ -6,8 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.JOptionPane;
 
@@ -16,6 +21,7 @@ import biblio.domain.Utilisateur;
 
 public class EmpruntEnCoursDao {
 	Connection cnx3 = null;
+	public SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
 	public EmpruntEnCoursDao(Connection cnx3) {
 		this.cnx3=cnx3;
 	}
@@ -23,20 +29,67 @@ public class EmpruntEnCoursDao {
 	public boolean insertEmpruntEnCours( EmpruntEnCours emprunt ) throws SQLException {
 		
 		Statement stmt = cnx3.createStatement();
+		
 		ResultSet rs = stmt.executeQuery("SELECT STATUS FROM EXEMPLAIRE WHERE idexemplaire ="+emprunt.getExemplaire().getIdExemplaire());
 		rs.next();
 		if (rs.getString(1).equalsIgnoreCase("DISPONIBLE")) {
-		
-			PreparedStatement pstmt = cnx3.prepareStatement("INSERT INTO EMPRUNTENCOURS VALUES (?, ?, TO_DATE(?, 'YYYY-MM-DD'))");
-			pstmt.setInt(1,emprunt.getExemplaire().getIdExemplaire());
-			pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
-			pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
-			pstmt.executeUpdate();
-			rs.close();
-			stmt.close();
-			pstmt.close();
-			cnx3.close();
-			return true;
+			if(emprunt.getUtilisateur().getCategorieUtilisateur().equalsIgnoreCase("ADHERENT")) {
+				ResultSet rs2 = stmt.executeQuery("SELECT dateemprunt FROM EMPRUNTENCOURS WHERE idutilisateur ="+emprunt.getUtilisateur().getidUtilisateur());
+				int x=0;
+				int y=0;
+				while(rs2.next()) {
+					long dif = ChronoUnit.DAYS.between(LocalDate.parse(rs2.getDate(1).toString()), LocalDate.now());
+					if( (int) dif > 15 && (int) dif!=730485) x++;
+					y++;
+				}
+				if( y<3 ) {							
+							if ( x==0 ) {
+									
+									PreparedStatement pstmt = cnx3.prepareStatement("INSERT INTO EMPRUNTENCOURS VALUES (?, ?, TO_DATE(?, 'DD-MM-YYYY'))");
+									pstmt.setInt(1,emprunt.getExemplaire().getIdExemplaire());
+									pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
+									pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
+									pstmt.executeUpdate();
+									rs.close();
+									stmt.close();
+									pstmt.close();
+									cnx3.close();
+									return true;
+							
+							}else {
+								
+								JOptionPane.showMessageDialog(null, "Désolé mais vous avez "+x+" exemplaire(s) en retard de restitution", "Quantité d'exemplaire empruntés en retard", JOptionPane.WARNING_MESSAGE);
+								rs.close();
+								rs2.close();
+								stmt.close();
+								cnx3.close();
+								return false;
+							}
+							
+										
+				}else {
+										
+					JOptionPane.showMessageDialog(null, "Désolé mais vous ne pouvez pas empruntez plus de trois exemplaires", "Quantité d'exemplaires empruntés", JOptionPane.WARNING_MESSAGE);
+					rs.close();
+					rs2.close();
+					stmt.close();
+					cnx3.close();
+					return false;
+				}
+			}else {
+				System.out.println("Vous etes un employe");
+				PreparedStatement pstmt = cnx3.prepareStatement("INSERT INTO EMPRUNTENCOURS VALUES (?, ?, TO_DATE(?, 'DD-MM-YYYY'))");
+				pstmt.setInt(1,emprunt.getExemplaire().getIdExemplaire());
+				pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
+				pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
+				pstmt.executeUpdate();
+				rs.close();
+				stmt.close();
+				pstmt.close();
+				cnx3.close();
+				return true;
+			}
+			
 		}else {
 			JOptionPane.showMessageDialog(null, "Désolé mais l'exemplaire demandé est "+rs.getString(1), "Disponibilité de l'exemplaire demandé", JOptionPane.WARNING_MESSAGE);
 			rs.close();
