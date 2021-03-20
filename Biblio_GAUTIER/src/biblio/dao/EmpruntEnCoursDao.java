@@ -8,17 +8,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 import javax.swing.JOptionPane;
 
-import biblio.domain.EmpruntArchive;
+
 import biblio.domain.EmpruntEnCours;
-import biblio.domain.EnumStatusExemplaire;
+
 import biblio.domain.Utilisateur;
 
 public class EmpruntEnCoursDao {

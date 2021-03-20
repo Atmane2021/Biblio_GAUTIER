@@ -1,16 +1,11 @@
 package biblio.domain;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+
 import java.util.Locale;
 
-import biblio.dao.ExemplairesDao;
-import biblio.dao.PingJdbc;
 
 public class Exemplaire {
 	private int idExemplaire;

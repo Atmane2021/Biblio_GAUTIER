@@ -1,18 +1,10 @@
 package biblio.domain;
 
-import java.io.IOException;
-import java.sql.SQLException;
+ 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-
-import javax.swing.JOptionPane;
-
-import biblio.dao.ExemplairesDao;
-import biblio.dao.PingJdbc;
-import biblio.dao.UtilisateursDao;
 
 public class Utilisateur extends Personne
 {
@@ -110,12 +102,6 @@ public class Utilisateur extends Personne
 	}
 
 	
-	private Exception BiblioException(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	public ArrayList<EmpruntEnCours> getEmpruntenCours()
 	{
 		return emprunt;

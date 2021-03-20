@@ -5,12 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.Properties;
 
-import javax.swing.JOptionPane;
+
 
 public class PingJdbc {
 	static ConnectionFactory connectionfactory;
@@ -54,15 +54,7 @@ public class PingJdbc {
 	   } 
 		
 		
-	     
-		
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		//PingJdbc.getConnectionByProperties();
-		// PingJdbc.getConnectionfactory().getConnection(nomPilote, URLBD, authorizationID, password);
-		//PingJdbc.getConnectionfactory().getConnectionSansAutoCommit(nomPilote, URLBD, authorizationID, password);
 	
-		
-	}
 }
 
 
