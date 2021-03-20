@@ -2,6 +2,7 @@ package biblio.control;
 
 import java.awt.HeadlessException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -11,6 +12,8 @@ import javax.swing.JOptionPane;
 import biblio.dao.ExemplairesDao;
 import biblio.dao.PingJdbc;
 import biblio.dao.UtilisateursDao;
+import biblio.domain.Exemplaire;
+import biblio.domain.Utilisateur;
 
 public class ConsulterCtl {
 
@@ -66,5 +69,29 @@ public class ConsulterCtl {
 		JOptionPane.showMessageDialog(null, "Au Revoir et a bientôt !", "Fin de session", JOptionPane.INFORMATION_MESSAGE);
 
 	}
+	
+	public static String connectbase() throws IOException {
+		Properties properties = new Properties();
+	      FileInputStream input = new FileInputStream("src\\biblio\\DAO\\jdbc.properties");
+	      try{
+	         properties.load(input);
+	      }finally{
+		         input.close();
+		         
+		  }
+	      return properties.getProperty("user");
+		
+	}
+	
+	public static Exemplaire consultexemplaire(String h) throws FileNotFoundException, IOException, NumberFormatException, SQLException {
+		ExemplairesDao exemplaire1 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
+				
+		return exemplaire1.findByKey(Integer.parseInt(h));
+	}
+	
+	public static String consultutilisateur(String k) throws FileNotFoundException, IOException, NumberFormatException, SQLException {
+		UtilisateursDao utilisateur1 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
+		return utilisateur1.findByKey(Integer.parseInt(k)).toString();				
+		}
 
 }

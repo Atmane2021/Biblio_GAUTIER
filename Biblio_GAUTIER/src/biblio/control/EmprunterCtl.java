@@ -54,5 +54,18 @@ public class EmprunterCtl {
 		
 
 	}
+	
+	public static String creaemprunt(String b,String a) throws FileNotFoundException, IOException, NumberFormatException, SQLException {
+		UtilisateursDao utilisateur2 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
+		ExemplairesDao exemplaire2 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
+		EmpruntEnCoursDao eecd = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
+		eecd.insertEmpruntEnCours(new EmpruntEnCours(utilisateur2.findByKey(Integer.parseInt(a)),exemplaire2.findByKey(Integer.parseInt(b))));
+		EmpruntEnCoursDao eecd3 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
+		String resultat = "\nListe des emprunts en cours de l'emprunteur "+a+" : \n";
+		for(EmpruntEnCoursDb v : eecd3.findByUtilisateur(utilisateur2.findByKey(Integer.parseInt(a)))) {
+			resultat = resultat +"Exemplaire id : "+v.getIdUtil()+"\n";
+		}
+		return resultat;
+	}
 
 }
