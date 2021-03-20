@@ -68,7 +68,7 @@ public class UtilisateursDao {
 					EnumCategorieEmploye cat2 = EnumCategorieEmploye.valueOf(cat_employe);
 					user = new Employe(id,nom, prenom, dn,sex, pwd, pseudo,code, cat2);
 				}
-
+				return user;
 			}
 
 			pstm.close();
@@ -76,7 +76,7 @@ public class UtilisateursDao {
 			e.printStackTrace();
 		}
 
-		return user;
+		return null;
 	}
 
 	public ArrayList<Utilisateur> findAll() {
