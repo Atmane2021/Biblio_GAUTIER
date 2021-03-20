@@ -94,8 +94,10 @@ public class EmprunterCtl {
 			System.out.println("Exemplaire id : "+v.getIdUtil()+"\n");
 		}
 		
-		
-		
+		ExemplairesDao eecd6 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
+
+		System.out.println("\nEtat de l'exemplaire emprunté : " + eecd6.findByKey(Integer.parseInt(b)).toString());
+					
 		}
 		
 		System.out.println("\n-------------Test 2.4 :Retour d'un emprunt en cours pourun Employé ou un Adhérent-----------------------");

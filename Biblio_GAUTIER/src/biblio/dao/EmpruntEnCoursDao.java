@@ -83,7 +83,7 @@ public class EmpruntEnCoursDao {
 					return false;
 				}
 			}else {
-				System.out.println("Vous etes un employe");
+
 				PreparedStatement pstmt = cnx3.prepareStatement("INSERT INTO EMPRUNTENCOURS VALUES (?, ?, TO_DATE(?, 'DD-MM-YYYY'))");
 				pstmt.setInt(1,emprunt.getExemplaire().getIdExemplaire());
 				pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
