@@ -86,8 +86,7 @@ public class ConsulterCtl {
 	
 	public static Exemplaire consultexemplaire(String h) throws FileNotFoundException, IOException, NumberFormatException, SQLException {
 		ExemplairesDao exemplaire1 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
-				
-		return exemplaire1.findByKey(Integer.parseInt(h));
+				return exemplaire1.findByKey(Integer.parseInt(h));
 	}
 	
 	public static String consultutilisateur(String k) throws FileNotFoundException, IOException, NumberFormatException, SQLException {

@@ -27,7 +27,7 @@ public Exemplaire findByKey(int idExemplaire) throws SQLException
 {
 	Statement stmt1 = cnx1.createStatement();
 	ResultSet rs2 = stmt1.executeQuery(
-			"select idexemplaire,status, dateachat,isbn "+
+			"select idexemplaire,status,dateachat,isbn "+
 			" FROM exemplaire where idexemplaire = " + idExemplaire);			
 	Exemplaire ex = null;
 	
@@ -36,7 +36,7 @@ public Exemplaire findByKey(int idExemplaire) throws SQLException
 	/*String idexemplaire = rs2.getString(1);
 	String status = rs2.getString(3);
 	Date dateachat=rs2.getDate(2);*/
-	
+
 	if( next ) {
 		int idexemplaire = rs2.getInt("idexemplaire"); // corrigé !!!
 		String status = rs2.getString("status");
@@ -44,7 +44,6 @@ public Exemplaire findByKey(int idExemplaire) throws SQLException
 		String isbn = rs2.getString("isbn");
 		EnumStatusExemplaire enumStatus = EnumStatusExemplaire.valueOf(status);
 		//Livre livre = null; // Lazy-loading //chargement tardif
-			
 		ex = new Exemplaire( idexemplaire, dateachat, enumStatus, isbn); //ici, mapping Objet Relationel
 	}
 	else {

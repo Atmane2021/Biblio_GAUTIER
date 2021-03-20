@@ -52,14 +52,26 @@ public class EmpruntEnCoursDao {
 									pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
 									pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
 									pstmt.executeUpdate();
+									pstmt.close();
 									PreparedStatement pstmt4 = cnx3.prepareStatement("UPDATE EXEMPLAIRE SET STATUS='PRETE' WHERE IDEXEMPLAIRE = ?");
 									pstmt4.setInt(1,emprunt.getExemplaire().getIdExemplaire());
 									pstmt4.executeUpdate();
 									pstmt4.close();
+									ResultSet rs3 = stmt.executeQuery("SELECT IDEMPRUNTARCHIVE FROM EMPRUNTARCHIVE ORDER BY IDEMPRUNTARCHIVE DESC FETCH FIRST 1 ROWS ONLY");
+									rs3.next();
+									PreparedStatement pstmt6 = cnx3.prepareStatement("INSERT INTO EMPRUNTARCHIVE VALUES (?, TO_DATE(?, 'DD-MM-YYYY')), TO_DATE(?, 'DD-MM-YYYY')),?,?");
+									pstmt6.setInt(1,(rs3.getInt(1)+1));
+									pstmt.setDate(2,Date.valueOf(emprunt.getDateEmprunt()));
+									pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
+									pstmt6.setInt(4,(emprunt.getExemplaire().getIdExemplaire()));
+									pstmt6.setInt(5,(emprunt.getUtilisateur().getidUtilisateur()));
+									pstmt6.executeUpdate();
+									pstmt6.close();
 									rs.close();
-									stmt.close();
-									pstmt.close();
-									cnx3.close();
+									rs2.close();
+									rs3.close();
+									stmt.close();									
+									//cnx3.close();
 									return true;
 							
 							}else {
@@ -89,14 +101,26 @@ public class EmpruntEnCoursDao {
 				pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
 				pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
 				pstmt.executeUpdate();
+				pstmt.close();
 				PreparedStatement pstmt5 = cnx3.prepareStatement("UPDATE EXEMPLAIRE SET STATUS='PRETE' WHERE IDEXEMPLAIRE = ?");
 				pstmt5.setInt(1,emprunt.getExemplaire().getIdExemplaire());
 				pstmt5.executeUpdate();
 				pstmt5.close();
+				ResultSet rs3 = stmt.executeQuery("SELECT IDEMPRUNTARCHIVE FROM EMPRUNTARCHIVE ORDER BY IDEMPRUNTARCHIVE DESC FETCH FIRST 1 ROWS ONLY");
+				rs3.next();
+				PreparedStatement pstmt6 = cnx3.prepareStatement("INSERT INTO EMPRUNTARCHIVE VALUES (?, TO_DATE(?, 'DD-MM-YYYY')), TO_DATE(?, 'DD-MM-YYYY')),?,?");
+				pstmt6.setInt(1,(rs3.getInt(1)+1));
+				pstmt.setDate(2,Date.valueOf(emprunt.getDateEmprunt()));
+				pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
+				pstmt6.setInt(4,(emprunt.getExemplaire().getIdExemplaire()));
+				pstmt6.setInt(5,(emprunt.getUtilisateur().getidUtilisateur()));
+				pstmt6.executeUpdate();
+				pstmt6.close();
 				rs.close();
+				rs3.close();
 				stmt.close();
-				pstmt.close();
-				cnx3.close();
+				
+				//cnx3.close();
 				return true;
 			}
 			

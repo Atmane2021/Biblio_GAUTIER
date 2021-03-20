@@ -124,18 +124,7 @@ public class Ecran_Acceuil extends JFrame {
 				}
 			}
 		});
-		btnEffacer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					textArea.setText(EmprunterCtl.creaemprunt(textField.getText(), textField_3.getText()));
-					
-				} catch (NumberFormatException | IOException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				//textField_1.setText("");
-			}
-		});
+		
 		btnNewButton_1.setBounds(224, 14, 170, 77);
 		frmBiblio.getContentPane().add(btnNewButton_1);
 		
@@ -149,6 +138,18 @@ public class Ecran_Acceuil extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+		});
+		btnEffacer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					textArea.setText(EmprunterCtl.creaemprunt(textField.getText(), textField_3.getText()));
+					
+				} catch (NumberFormatException | IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//textField_1.setText("");
 			}
 		});
 		btnOk.addActionListener(new ActionListener() {
