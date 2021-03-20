@@ -16,7 +16,9 @@ import java.util.Locale;
 
 import javax.swing.JOptionPane;
 
+import biblio.domain.EmpruntArchive;
 import biblio.domain.EmpruntEnCours;
+import biblio.domain.EnumStatusExemplaire;
 import biblio.domain.Utilisateur;
 
 public class EmpruntEnCoursDao {
@@ -50,6 +52,10 @@ public class EmpruntEnCoursDao {
 									pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
 									pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
 									pstmt.executeUpdate();
+									PreparedStatement pstmt4 = cnx3.prepareStatement("UPDATE EXEMPLAIRE SET STATUS='PRETE' WHERE IDEXEMPLAIRE = ?");
+									pstmt4.setInt(1,emprunt.getExemplaire().getIdExemplaire());
+									pstmt4.executeUpdate();
+									pstmt4.close();
 									rs.close();
 									stmt.close();
 									pstmt.close();
@@ -83,6 +89,10 @@ public class EmpruntEnCoursDao {
 				pstmt.setInt(2,emprunt.getUtilisateur().getidUtilisateur());
 				pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
 				pstmt.executeUpdate();
+				PreparedStatement pstmt5 = cnx3.prepareStatement("UPDATE EXEMPLAIRE SET STATUS='PRETE' WHERE IDEXEMPLAIRE = ?");
+				pstmt5.setInt(1,emprunt.getExemplaire().getIdExemplaire());
+				pstmt5.executeUpdate();
+				pstmt5.close();
 				rs.close();
 				stmt.close();
 				pstmt.close();
@@ -99,7 +109,33 @@ public class EmpruntEnCoursDao {
 		}
 	}
 	
-	
+	public void removeEmpruntEnCours(int idExemplaire) throws SQLException {
+		
+		PreparedStatement pstmt2 = cnx3.prepareStatement("DELETE FROM EMPRUNTENCOURS WHERE IDEXEMPLAIRE = ?");
+		pstmt2.setInt(1,idExemplaire);
+		pstmt2.execute();
+		pstmt2.close();
+		PreparedStatement pstmt3 = cnx3.prepareStatement("UPDATE EXEMPLAIRE SET STATUS='DISPONIBLE' WHERE IDEXEMPLAIRE = ?");
+		pstmt3.setInt(1,idExemplaire);
+		pstmt3.executeUpdate();
+		pstmt3.close();
+		cnx3.close();
+			
+//		int j= 0;
+//		for(EmpruntEnCours o : emprunt) {
+//            if(o.getExemplaire().getIdExemplaire()==id) {
+//            	j =emprunt.indexOf(o);
+//            	o.getExemplaire().setStatus(EnumStatusExemplaire.DISPONIBLE);
+//            	 stock = new EmpruntArchive(emprunt.get(j), LocalDate.now().format(df));
+//            }
+//            
+//        }
+//		
+//        System.out.println("Archive crée : "+stock.getExemplaire().getIdExemplaire()+" a été emprunté le : "+stock.getDateEmprunt().format(df)+ " , et restitué le :"+stock.getDateRestitutionEff().format(df));
+//       
+//        emprunt.remove(j);
+        
+    }
 	public EmpruntEnCoursDb findByKey(int idExemplaire) throws SQLException
 	{
 		Statement stmt3 = cnx3.createStatement();
