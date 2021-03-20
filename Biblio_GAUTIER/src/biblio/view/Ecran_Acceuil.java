@@ -20,6 +20,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import biblio.control.ConsulterCtl;
 import biblio.control.EmprunterCtl;
+import biblio.control.RetourCtl;
 
 import javax.swing.JTextArea;
 import java.awt.Font;
@@ -55,19 +56,23 @@ public class Ecran_Acceuil extends JFrame {
 	}
 	/**
 	 * Create the application.
+	 * @throws SQLException 
+	 * @throws IOException 
 	 */
-	public Ecran_Acceuil(){
+	public Ecran_Acceuil() throws IOException, SQLException{
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws SQLException 
+	 * @throws IOException 
 	 */
 	
-	private void initialize() {
+	private void initialize() throws IOException, SQLException {
 			frmBiblio = new JFrame();
 			frmBiblio.setTitle("CONNECTION A LA BIBLIOTHEQUE");
-			frmBiblio.setBounds(100, 100, 1031, 713);
+			frmBiblio.setBounds(100, 100, 1005, 707);
 			frmBiblio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frmBiblio.getContentPane().setLayout(null);
 		
@@ -91,27 +96,12 @@ public class Ecran_Acceuil extends JFrame {
 		frmBiblio.getContentPane().add(btnNewButton);
 		
 		JButton btnEffacer = new JButton("Faire un emprunt");
-		btnEffacer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					textArea.setText(EmprunterCtl.creaemprunt(textField.getText(), textField_3.getText()));
-					
-				} catch (NumberFormatException | IOException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				//textField_1.setText("");
-			}
-		});
+		
 		btnEffacer.setBounds(613, 14, 170, 77);
 		frmBiblio.getContentPane().add(btnEffacer);
 		
 		JButton btnOk = new JButton("Restituer un emprunt");
-		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//textField_1.setText(textField.getText());
-			}
-		});
+		
 		btnOk.setBounds(806, 15, 170, 77);
 		frmBiblio.getContentPane().add(btnOk);
 		
@@ -119,7 +109,7 @@ public class Ecran_Acceuil extends JFrame {
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);		
 		textArea.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		textArea.setBounds(22, 193, 967, 458);
+		textArea.setBounds(14, 198, 962, 453);
 		frmBiblio.getContentPane().add(textArea);
 		
 		JButton btnNewButton_1 = new JButton("Consulter un exemplaire");
@@ -134,6 +124,18 @@ public class Ecran_Acceuil extends JFrame {
 				}
 			}
 		});
+		btnEffacer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					textArea.setText(EmprunterCtl.creaemprunt(textField.getText(), textField_3.getText()));
+					
+				} catch (NumberFormatException | IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//textField_1.setText("");
+			}
+		});
 		btnNewButton_1.setBounds(224, 14, 170, 77);
 		frmBiblio.getContentPane().add(btnNewButton_1);
 		
@@ -144,6 +146,16 @@ public class Ecran_Acceuil extends JFrame {
 
 					textArea.setText(ConsulterCtl.consultutilisateur(textField_3.getText()).toString());
 				} catch (NumberFormatException | IOException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					textArea.setText(RetourCtl.retour(textField.getText()));
+				} catch (NumberFormatException | SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -166,6 +178,24 @@ public class Ecran_Acceuil extends JFrame {
 		lblSaisirLidDe.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		lblSaisirLidDe.setBounds(613, 113, 170, 20);
 		frmBiblio.getContentPane().add(lblSaisirLidDe);
+		
+		JLabel lblNewLabel_1 = new JLabel("Employ\u00E9 id :");
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(14, 121, 191, 14);
+		lblNewLabel_1.setText("Employ\u00E9 id : "+ConsulterCtl.nbE());
+		frmBiblio.getContentPane().add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Adherent id : ");
+		lblNewLabel_1_1.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		lblNewLabel_1_1.setBounds(14, 144, 380, 14);
+		lblNewLabel_1_1.setText("Adherent id : "+ConsulterCtl.nbA());
+		frmBiblio.getContentPane().add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("Exemplaire de : ");
+		lblNewLabel_1_2.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		lblNewLabel_1_2.setBounds(14, 169, 380, 14);
+		lblNewLabel_1_2.setText("Exemplaire id : "+ConsulterCtl.nbL());
+		frmBiblio.getContentPane().add(lblNewLabel_1_2);
 	}
 }
 

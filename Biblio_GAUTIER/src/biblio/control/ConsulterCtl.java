@@ -15,6 +15,7 @@ import biblio.dao.UtilisateursDao;
 import biblio.domain.Exemplaire;
 import biblio.domain.Utilisateur;
 
+
 public class ConsulterCtl {
 
 	public static void main(String[] args) throws HeadlessException, IOException, NumberFormatException, SQLException {
@@ -93,5 +94,31 @@ public class ConsulterCtl {
 		UtilisateursDao utilisateur1 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
 		return utilisateur1.findByKey(Integer.parseInt(k)).toString();				
 		}
-
+	
+	public static String nbE() throws IOException {
+		String h="";
+		UtilisateursDao utilisateur7 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
+		for(Utilisateur u : utilisateur7.findAll()){
+			if ( u.getCategorieUtilisateur().contains("EMPLOYE")) h=h+u.getidUtilisateur()+" ";
+		}
+		return h;
+	}
+	public static String nbA() throws IOException {
+		String i="";
+		UtilisateursDao utilisateur6 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
+		for(Utilisateur w : utilisateur6.findAll()){
+			if ( w.getCategorieUtilisateur().equalsIgnoreCase("ADHERENT")) i=i+w.getidUtilisateur()+" ";
+		}
+		return i;
+	}
+	public static String nbL() throws IOException, SQLException {
+		String j="";
+		ExemplairesDao ex6 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
+		for(Exemplaire v : ex6.findAll()){
+			j=j+v.getIdExemplaire()+" ";
+		}
+		return j;
+	}
 }
+
+

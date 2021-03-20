@@ -42,5 +42,18 @@ public class RetourCtl {
 		
 		JOptionPane.showMessageDialog(null, "Au Revoir et a bientôt !", "Fin de session", JOptionPane.INFORMATION_MESSAGE);
 	}
+	
+	public static String retour(String c) throws NumberFormatException, SQLException, FileNotFoundException, IOException {
+		new ExemplairesDao(PingJdbc.getConnectionByProperties());
+		EmpruntEnCoursDao eecd4 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
+		eecd4.removeEmpruntEnCours(Integer.parseInt(c));
+
+		ExemplairesDao eecd5 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
+		String result = "\nListe des exemplaires disponibles : \n";
+		for(Exemplaire w : eecd5.findAll()) {
+			if ( w.getStatus().toString().equalsIgnoreCase("DISPONIBLE")) result = result + "Exemplaire id : "+w+"\n";
+		}
+		return result;
+	}
 
 }
