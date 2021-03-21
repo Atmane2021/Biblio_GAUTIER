@@ -60,9 +60,11 @@ public class EmprunterCtl {
 		ExemplairesDao exemplaire2 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
 		EmpruntEnCoursDao eecd = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
 		eecd.insertEmpruntEnCours(new EmpruntEnCours(utilisateur2.findByKey(Integer.parseInt(a)),exemplaire2.findByKey(Integer.parseInt(b))));
+		
+		UtilisateursDao utilisateur6 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
 		EmpruntEnCoursDao eecd3 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
 		String resultat = "\nListe des emprunts en cours de l'emprunteur "+a+" : \n";
-		for(EmpruntEnCoursDb v : eecd3.findByUtilisateur(utilisateur2.findByKey(Integer.parseInt(a)))) {
+		for(EmpruntEnCoursDb v : eecd3.findByUtilisateur(utilisateur6.findByKey(Integer.parseInt(a)))) {
 			resultat = resultat +"Exemplaire id : "+v.getIdUtil()+"\n";
 		}
 		return resultat;

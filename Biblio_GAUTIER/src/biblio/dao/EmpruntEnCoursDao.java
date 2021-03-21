@@ -56,20 +56,9 @@ public class EmpruntEnCoursDao {
 									PreparedStatement pstmt4 = cnx3.prepareStatement("UPDATE EXEMPLAIRE SET STATUS='PRETE' WHERE IDEXEMPLAIRE = ?");
 									pstmt4.setInt(1,emprunt.getExemplaire().getIdExemplaire());
 									pstmt4.executeUpdate();
-									pstmt4.close();
-									ResultSet rs3 = stmt.executeQuery("SELECT IDEMPRUNTARCHIVE FROM EMPRUNTARCHIVE ORDER BY IDEMPRUNTARCHIVE DESC FETCH FIRST 1 ROWS ONLY");
-									rs3.next();
-									PreparedStatement pstmt6 = cnx3.prepareStatement("INSERT INTO EMPRUNTARCHIVE VALUES (?, TO_DATE(?, 'DD-MM-YYYY')), TO_DATE(?, 'DD-MM-YYYY')),?,?");
-									pstmt6.setInt(1,(rs3.getInt(1)+1));
-									pstmt.setDate(2,Date.valueOf(emprunt.getDateEmprunt()));
-									pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
-									pstmt6.setInt(4,(emprunt.getExemplaire().getIdExemplaire()));
-									pstmt6.setInt(5,(emprunt.getUtilisateur().getidUtilisateur()));
-									pstmt6.executeUpdate();
-									pstmt6.close();
+									pstmt4.close();									
 									rs.close();
 									rs2.close();
-									rs3.close();
 									stmt.close();									
 									//cnx3.close();
 									return true;
@@ -106,20 +95,8 @@ public class EmpruntEnCoursDao {
 				pstmt5.setInt(1,emprunt.getExemplaire().getIdExemplaire());
 				pstmt5.executeUpdate();
 				pstmt5.close();
-				ResultSet rs3 = stmt.executeQuery("SELECT IDEMPRUNTARCHIVE FROM EMPRUNTARCHIVE ORDER BY IDEMPRUNTARCHIVE DESC FETCH FIRST 1 ROWS ONLY");
-				rs3.next();
-				PreparedStatement pstmt6 = cnx3.prepareStatement("INSERT INTO EMPRUNTARCHIVE VALUES (?, TO_DATE(?, 'DD-MM-YYYY')), TO_DATE(?, 'DD-MM-YYYY')),?,?");
-				pstmt6.setInt(1,(rs3.getInt(1)+1));
-				pstmt.setDate(2,Date.valueOf(emprunt.getDateEmprunt()));
-				pstmt.setDate(3,Date.valueOf(emprunt.getDateEmprunt()));
-				pstmt6.setInt(4,(emprunt.getExemplaire().getIdExemplaire()));
-				pstmt6.setInt(5,(emprunt.getUtilisateur().getidUtilisateur()));
-				pstmt6.executeUpdate();
-				pstmt6.close();
 				rs.close();
-				rs3.close();
-				stmt.close();
-				
+				stmt.close();				
 				//cnx3.close();
 				return true;
 			}
@@ -135,6 +112,30 @@ public class EmpruntEnCoursDao {
 	
 	public void removeEmpruntEnCours(int idExemplaire) throws SQLException {
 		
+		Statement stmt = cnx3.createStatement();
+		
+		ResultSet rs8 = stmt.executeQuery("SELECT * FROM EMPRUNTENCOURS ");
+		rs8.next();
+		
+		Statement stmt2 = cnx3.createStatement();
+		
+		ResultSet rs3 = stmt2.executeQuery("SELECT IDEMPRUNTARCHIVE+1 FROM EMPRUNTARCHIVE ORDER BY IDEMPRUNTARCHIVE DESC FETCH FIRST 1 ROWS ONLY");
+		rs3.next();
+		
+		
+		PreparedStatement pstmt6 = cnx3.prepareStatement("INSERT INTO EMPRUNTARCHIVE VALUES (?, TO_DATE(?, 'DD-MM-YYYY'), TO_DATE(?, 'DD-MM-YYYY'),?,?)");
+		pstmt6.setInt(1,(rs3.getInt(1)));
+		pstmt6.setDate(2,rs8.getDate(3));
+		pstmt6.setDate(3,rs8.getDate(3));
+		pstmt6.setInt(4,rs8.getInt(1));
+		pstmt6.setInt(5,rs8.getInt(2));
+		pstmt6.executeUpdate();
+		pstmt6.close();
+		rs8.close();
+		rs3.close();
+		stmt.close();
+		stmt2.close();
+		
 		PreparedStatement pstmt2 = cnx3.prepareStatement("DELETE FROM EMPRUNTENCOURS WHERE IDEXEMPLAIRE = ?");
 		pstmt2.setInt(1,idExemplaire);
 		pstmt2.execute();
@@ -142,7 +143,8 @@ public class EmpruntEnCoursDao {
 		PreparedStatement pstmt3 = cnx3.prepareStatement("UPDATE EXEMPLAIRE SET STATUS='DISPONIBLE' WHERE IDEXEMPLAIRE = ?");
 		pstmt3.setInt(1,idExemplaire);
 		pstmt3.executeUpdate();
-		pstmt3.close();
+		pstmt3.close();	
+		
 		cnx3.close();
 			
 //		int j= 0;
