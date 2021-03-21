@@ -126,7 +126,7 @@ public class EmpruntEnCoursDao {
 		PreparedStatement pstmt6 = cnx3.prepareStatement("INSERT INTO EMPRUNTARCHIVE VALUES (?, TO_DATE(?, 'DD-MM-YYYY'), TO_DATE(?, 'DD-MM-YYYY'),?,?)");
 		pstmt6.setInt(1,(rs3.getInt(1)));
 		pstmt6.setDate(2,rs8.getDate(3));
-		pstmt6.setDate(3,rs8.getDate(3));
+		pstmt6.setDate(3,Date.valueOf(LocalDate.now()));
 		pstmt6.setInt(4,rs8.getInt(1));
 		pstmt6.setInt(5,rs8.getInt(2));
 		pstmt6.executeUpdate();

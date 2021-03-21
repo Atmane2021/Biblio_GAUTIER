@@ -6,9 +6,11 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import biblio.dao.EmpruntArchiveDao;
 import biblio.dao.EmpruntEnCoursDao;
 import biblio.dao.ExemplairesDao;
 import biblio.dao.PingJdbc;
+import biblio.domain.EmpruntArchive;
 import biblio.domain.Exemplaire;
 
 public class RetourCtl {
@@ -53,6 +55,13 @@ public class RetourCtl {
 		for(Exemplaire w : eecd5.findAll()) {
 			if ( w.getStatus().toString().equalsIgnoreCase("DISPONIBLE")) result = result + "Exemplaire id : "+w+"\n";
 		}
+		
+		EmpruntArchiveDao eecd9 = new EmpruntArchiveDao(PingJdbc.getConnectionByProperties());
+		String result2 = "\nListe des exemplaires archivés de cet utilisateur : \n";
+		for(EmpruntArchive x : eecd9.findAll()) {
+			result2 = result2 + "Exemplaires archivés : "+x+"\n";
+		}
+		result = result+result2;
 		return result;
 	}
 
