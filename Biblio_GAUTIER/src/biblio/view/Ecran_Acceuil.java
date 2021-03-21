@@ -72,7 +72,7 @@ public class Ecran_Acceuil extends JFrame {
 	private void initialize() throws IOException, SQLException {
 			frmBiblio = new JFrame();
 			frmBiblio.setTitle("CONNECTION A LA BIBLIOTHEQUE");
-			frmBiblio.setBounds(100, 100, 1005, 707);
+			frmBiblio.setBounds(100, 100, 1005, 937);
 			frmBiblio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frmBiblio.getContentPane().setLayout(null);
 		
@@ -108,8 +108,8 @@ public class Ecran_Acceuil extends JFrame {
 		JTextArea textArea = new JTextArea();
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);		
-		textArea.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-		textArea.setBounds(14, 198, 962, 453);
+		textArea.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		textArea.setBounds(14, 198, 962, 689);
 		frmBiblio.getContentPane().add(textArea);
 		
 		JButton btnNewButton_1 = new JButton("Consulter un exemplaire");
