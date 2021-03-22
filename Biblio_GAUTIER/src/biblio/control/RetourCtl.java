@@ -51,13 +51,13 @@ public class RetourCtl {
 		eecd4.removeEmpruntEnCours(Integer.parseInt(c));
 
 		ExemplairesDao eecd5 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
-		String result = "\nListe des exemplaires disponibles : \n";
+		String result = "\nListe des exemplaires disponibles : \n\n";
 		for(Exemplaire w : eecd5.findAll()) {
 			if ( w.getStatus().toString().equalsIgnoreCase("DISPONIBLE")) result = result + "Exemplaire id : "+w+"\n";
 		}
 		
 		EmpruntArchiveDao eecd9 = new EmpruntArchiveDao(PingJdbc.getConnectionByProperties());
-		String result2 = "\nListe des exemplaires archivés de cet utilisateur : \n";
+		String result2 = "\nListe des exemplaires archivés de cet utilisateur : \n\n";
 		for(EmpruntArchive x : eecd9.findAll()) {
 			result2 = result2 + "Exemplaires archivés : "+x+"\n";
 		}

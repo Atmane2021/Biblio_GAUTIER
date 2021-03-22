@@ -114,7 +114,7 @@ public class EmpruntEnCoursDao {
 		
 		Statement stmt = cnx3.createStatement();
 		
-		ResultSet rs8 = stmt.executeQuery("SELECT * FROM EMPRUNTENCOURS ");
+		ResultSet rs8 = stmt.executeQuery("SELECT * FROM EMPRUNTENCOURS WHERE IDEXEMPLAIRE ="+ idExemplaire);
 		rs8.next();
 		
 		Statement stmt2 = cnx3.createStatement();
