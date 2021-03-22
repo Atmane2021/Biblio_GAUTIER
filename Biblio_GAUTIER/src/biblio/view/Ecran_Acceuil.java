@@ -105,7 +105,7 @@ public class Ecran_Acceuil extends JFrame {
 		btnOk.setBounds(806, 15, 170, 77);
 		frmBiblio.getContentPane().add(btnOk);
 		
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);		
 		textArea.setFont(new Font("Times New Roman", Font.PLAIN, 15));

@@ -4,13 +4,15 @@ package biblio.domain;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Personne 
 {
    private String nom;
    private String prenom;
-   protected static DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-   private LocalDate dateNaissance;
+   protected static DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd").withLocale(Locale.FRENCH);
+   protected static DateTimeFormatter dfn = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+   private String dateNaissance;
    private String sexe;
    
    /**
@@ -21,7 +23,7 @@ public class Personne
     
 	   this.nom = nom;
 	   this.prenom = prenom;
-	   setDateNaissance(dateNaissance);
+	   this.dateNaissance=LocalDate.parse(dateNaissance,df).format(dfn);
 	   this.sexe = sexe;
    }
    
@@ -31,12 +33,12 @@ public class Personne
 	
 	
 	
-	public LocalDate getDateNaissance() {
+	public String getDateNaissance() {
 	return dateNaissance;
 }
 
-public LocalDate setDateNaissance(String dateNaissance) {
-	return LocalDate.parse(dateNaissance);
+public String setDateNaissance(String dateNaissance) {
+	return dateNaissance;
 }
 
 public String getSexe() {

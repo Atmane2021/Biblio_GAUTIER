@@ -16,9 +16,10 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-
+import biblio.domain.Adherent;
 import biblio.domain.EmpruntEnCours;
-
+import biblio.domain.EnumStatusExemplaire;
+import biblio.domain.Exemplaire;
 import biblio.domain.Utilisateur;
 
 public class EmpruntEnCoursDao {
@@ -41,10 +42,10 @@ public class EmpruntEnCoursDao {
 				int y=0;
 				while(rs2.next()) {
 					long dif = ChronoUnit.DAYS.between(LocalDate.parse(rs2.getDate(1).toString()), LocalDate.now());
-					if( (int) dif > 15 && (int) dif!=730485) x++;
+					if( (int) dif > Adherent.dureeMaxPrets && (int) dif!=730485) x++;
 					y++;
 				}
-				if( y<3 ) {							
+				if( y<Adherent.nbMaxPrets ) {							
 							if ( x==0 ) {
 									
 									PreparedStatement pstmt = cnx3.prepareStatement("INSERT INTO EMPRUNTENCOURS VALUES (?, ?, TO_DATE(?, 'DD-MM-YYYY'))");
@@ -201,12 +202,34 @@ public class EmpruntEnCoursDao {
 			listeEmpruntEnCoursDb.add(ex2);
 			
 		}
+		rs4.close();
+		stmt4.close();
 		
 		return listeEmpruntEnCoursDb;
 	}
 	
 	
+	public List<Exemplaire> controlRetard(int idUtilisateur) throws SQLException {
+		List<Exemplaire> exenretard = new ArrayList<>();
+		List<Integer> idf = new ArrayList<>();
+		Statement stmt6 = cnx3.createStatement();
+		ResultSet rs9 = stmt6.executeQuery("SELECT DATEEMPRUNT,IDEXEMPLAIRE FROM EMPRUNTENCOURS WHERE idutilisateur ="+idUtilisateur);
 
+		while(rs9.next()) {
+			long dif = ChronoUnit.DAYS.between(LocalDate.parse(rs9.getDate(1).toString()), LocalDate.now());
+			if( (int) dif > Adherent.dureeMaxPrets && (int) dif!=730485) idf.add(rs9.getInt(2));
+		}
+			for(Integer i : idf) {
+			ResultSet rs10 = stmt6.executeQuery("SELECT * FROM EXEMPLAIRE WHERE idexemplaire ="+i);
+			rs10.next();
+			exenretard.add(new Exemplaire(rs10.getInt(1), rs10.getDate(2).toString(), EnumStatusExemplaire.valueOf(rs10.getString(3)), rs10.getString(4)));
+			rs10.close();
+			}
+		
+		rs9.close();
+		stmt6.close();
+		return exenretard;
+	}
 	
 
 }

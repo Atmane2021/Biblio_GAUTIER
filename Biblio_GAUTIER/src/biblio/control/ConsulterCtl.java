@@ -4,7 +4,10 @@ import java.awt.HeadlessException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
@@ -103,12 +106,16 @@ public class ConsulterCtl {
 		UtilisateursDao utilisateur1 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
 		if(utilisateur1.findByKey(Integer.parseInt(k))==null ) return "Aucune réponse, choisissez parmi les réponses affichées ci-jointes";
 		o=utilisateur1.findByKey(Integer.parseInt(k)).toString();
+		if(utilisateur1.findByKey(Integer.parseInt(k)).getCategorieUtilisateur().equalsIgnoreCase("ADHERENT")) {
 		
-		o=o+"\n\nListe des emprunts en cours : \n";
+			EmpruntEnCoursDao eecd6 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
+			for(EmpruntEnCoursDb s : eecd6.findByUtilisateur(utilisateur1.findByKey(Integer.parseInt(k)))){
 				
-		EmpruntEnCoursDao eecd6 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
-		for(EmpruntEnCoursDb s : eecd6.findByUtilisateur(utilisateur1.findByKey(Integer.parseInt(k)))){
-			o=o+"\n ID exemplaire : "+s.getIdExemp();
+				o=o+"\n\nExemplaire(s) en retard à rendre au plus vite :\n\n ";
+				for (Exemplaire g : eecd6.controlRetard(Integer.parseInt(k))){
+					o=o+g+"\n";
+				}
+			}
 		}
 		return o;
 		}
