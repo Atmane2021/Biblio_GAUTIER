@@ -7,8 +7,8 @@ public class Adherent extends Utilisateur
 {
 	private String telephone;
 	private String cat;
-	private int nbMaxPrets = 3;
-	private int dureeMaxPrets =15;
+	public static int nbMaxPrets = 3;
+	public static int dureeMaxPrets =15;	
 		
 	public Adherent(int idUtilisateur,String nom, String prenom,String pwd,String pseudonyme,String dateNaissance,String sexe,String cat, String telephone)
 	{
@@ -22,8 +22,7 @@ public class Adherent extends Utilisateur
 	
 	@Override
 	public String toString() {
-		return "Categorie d'utilisateur = " + getCat()+", Nom = " + getNom() + ", Prenom = " + getPrenom()+ " numero de telephone = " + telephone + ", id de l'utilisateur = " + getidUtilisateur() + ", pseudo = " + getpseudonyme() + ", genre = "
-				+ getSexe() +".";
+		return super.toString()+ " numero de telephone = " + telephone +".";
 	}
 
 
@@ -40,7 +39,7 @@ public class Adherent extends Utilisateur
 	}
 
 	public void setNbMaxPrets(int nbMaxPrets) {
-		this.nbMaxPrets = nbMaxPrets;
+		Adherent.nbMaxPrets = nbMaxPrets;
 	}
 
 	public int getDureeMaxPrets() {
@@ -48,7 +47,7 @@ public class Adherent extends Utilisateur
 	}
 
 	public void setDureeMaxPrets(int dureeMaxPrets) {
-		this.dureeMaxPrets = dureeMaxPrets;
+		Adherent.dureeMaxPrets = dureeMaxPrets;
 	}
 
 	public boolean isConditionsPretAcceptees()

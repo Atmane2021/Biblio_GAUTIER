@@ -9,9 +9,13 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
+import biblio.dao.EmpruntEnCoursDao;
+import biblio.dao.EmpruntEnCoursDb;
 import biblio.dao.ExemplairesDao;
 import biblio.dao.PingJdbc;
 import biblio.dao.UtilisateursDao;
+import biblio.domain.Adherent;
+import biblio.domain.EmpruntEnCours;
 import biblio.domain.Exemplaire;
 import biblio.domain.Utilisateur;
 
@@ -85,15 +89,30 @@ public class ConsulterCtl {
 	}
 	
 	public static String consultexemplaire(String h) throws FileNotFoundException, IOException, NumberFormatException, SQLException {
+		if(!h.isBlank()) {
 		ExemplairesDao exemplaire1 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
 		if(exemplaire1.findByKey(Integer.parseInt(h))==null ) return "Aucune réponse, choisissez parmi les réponses affichées ci-jointes";
 				return exemplaire1.findByKey(Integer.parseInt(h)).toString();
+		}
+		return "Renseignez le champs ID Exemplaire, s.v.p. !";
 	}
 	
 	public static String consultutilisateur(String k) throws FileNotFoundException, IOException, NumberFormatException, SQLException {
+		if(!k.isBlank()) {
+		String o="";
 		UtilisateursDao utilisateur1 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
 		if(utilisateur1.findByKey(Integer.parseInt(k))==null ) return "Aucune réponse, choisissez parmi les réponses affichées ci-jointes";
-		return utilisateur1.findByKey(Integer.parseInt(k)).toString();				
+		o=utilisateur1.findByKey(Integer.parseInt(k)).toString();
+		
+		o=o+"\n\nListe des emprunts en cours : \n";
+				
+		EmpruntEnCoursDao eecd6 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
+		for(EmpruntEnCoursDb s : eecd6.findByUtilisateur(utilisateur1.findByKey(Integer.parseInt(k)))){
+			o=o+"\n ID exemplaire : "+s.getIdExemp();
+		}
+		return o;
+		}
+		return "Renseignez le champs ID Utilisateur, s.v.p. !";
 		}
 	
 	public static String nbE() throws IOException {

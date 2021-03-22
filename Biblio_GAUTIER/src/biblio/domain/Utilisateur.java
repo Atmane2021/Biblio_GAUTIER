@@ -40,12 +40,9 @@ public class Utilisateur extends Personne
 
 	@Override
 	public String toString() {
-		return "Catégorie d'utilisateur ="+getCategorieUtilisateur()+", Nom =" + getNom() + ", Prenom =" + getPrenom() + ", EmpruntenCours ="
-				+ getEmpruntenCours() + ", idUtilisateur =" + getidUtilisateur() + ", pwd =" + getpwd()
-				+ ", pseudonyme =" + getpseudonyme() + ", CategorieEmploye =" + getCategorieEmploye()
-				+ ", DateNaissance =" + getDateNaissance() + ", Sexe =" + getSexe();
-	}
-
+		return super.toString()+", Catégorie d'utilisateur ="+getCategorieUtilisateur()+", idUtilisateur =" + getidUtilisateur() + ", pwd =" + getpwd()
+				+ ", pseudonyme =" + getpseudonyme();
+	}	
 
 
 	public static ArrayList<EmpruntEnCours> getEmprunt() {

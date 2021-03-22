@@ -46,6 +46,7 @@ public class RetourCtl {
 	}
 	
 	public static String retour(String c) throws NumberFormatException, SQLException, FileNotFoundException, IOException {
+		if (! c.isBlank()) {
 		new ExemplairesDao(PingJdbc.getConnectionByProperties());
 		EmpruntEnCoursDao eecd4 = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
 		eecd4.removeEmpruntEnCours(Integer.parseInt(c));
@@ -63,6 +64,8 @@ public class RetourCtl {
 		}
 		result = result+result2;
 		return result;
+		}
+		return "Renseignez le champs ID Exemplaire, s.v.p. !";
 	}
 
 }

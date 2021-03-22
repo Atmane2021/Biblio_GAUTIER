@@ -70,7 +70,7 @@ public void setSexe(String sexe) {
 
 	@Override
 	public String toString() {
-		return "Personne [nom=" + nom + ", prénom=" + prenom + ", sexe =" + sexe + "]";
+		return "Nom=" + nom + ", Prenom=" + prenom + ", Date de naissance=" + dateNaissance + ", Sexe=" + sexe;
 	}
 
 	@Override

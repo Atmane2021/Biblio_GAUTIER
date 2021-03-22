@@ -60,7 +60,7 @@ public class Ecran_Acceuil extends JFrame {
 	 * @throws IOException 
 	 */
 	public Ecran_Acceuil() throws IOException, SQLException{
-		initialize();
+		initialize();		
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class Ecran_Acceuil extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("  Saisir l'ID de l'exemplaire");
 		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		lblNewLabel.setBounds(228, 113, 166, 20);
+		lblNewLabel.setBounds(228, 113, 178, 20);
 		frmBiblio.getContentPane().add(lblNewLabel);
 		
 		JLabel lblSaisirLidDe = new JLabel("  Saisir l'ID de l'utilisateur");

@@ -16,7 +16,7 @@ public class Employe extends Utilisateur
 
 	@Override
 	public String toString() {
-		return super.toString()+"  Matricule = " + codeMatricule + ".";
+		return super.toString()+", Categorie d'employé = "+categorieEmploye + ", Matricule = " + codeMatricule + ".";
 	}
 
 

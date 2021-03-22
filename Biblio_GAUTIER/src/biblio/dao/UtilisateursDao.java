@@ -25,7 +25,7 @@ public class UtilisateursDao {
 	}
 
 	public Utilisateur findByKey(int idUser) {
-		PreparedStatement pstm;
+		PreparedStatement pstm,pstm2;
 		Utilisateur user = null;
 		int id = 0;
 		String pwd = "";
@@ -39,6 +39,12 @@ public class UtilisateursDao {
 		String dn;
 		String sex ="";
 		try {
+			
+			pstm2 = con.prepareStatement("SELECT * FROM ADHERENTGENERAL");
+			ResultSet ag = pstm2.executeQuery();
+			ag.next();
+			Adherent.nbMaxPrets= ag.getInt(1);
+			Adherent.dureeMaxPrets = ag.getInt(2);
 			pstm = con
 					.prepareStatement("select utilisateur.idutilisateur, utilisateur.pwd, utilisateur.nom, utilisateur.prenom, utilisateur.pseudonyme, utilisateur.datenaissance, utilisateur.sexe, categorieutilisateur, telephone, codematricule, categorieemploye "
 							+ "from utilisateur, adherent, employe "
@@ -47,6 +53,7 @@ public class UtilisateursDao {
 							+ "and utilisateur.idutilisateur=?");
 			pstm.setInt(1, idUser);
 			ResultSet result = pstm.executeQuery();
+
 			while (result.next()) {
 				id = result.getInt(1);
 				pwd = result.getString(2);
@@ -60,7 +67,7 @@ public class UtilisateursDao {
 				if (cat.equals("ADHERENT")) {
 					tel = result.getString(9);
 					
-					user = new Adherent(id,nom, prenom,  pwd,pseudo,dn,sex,cat, tel);
+					user = new Adherent(id,nom, prenom, pwd,pseudo,dn,sex,cat, tel);
 				}
 				if (cat.equals("EMPLOYE")) {
 					code = result.getString(10);

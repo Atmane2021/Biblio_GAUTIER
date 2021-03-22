@@ -56,6 +56,7 @@ public class EmprunterCtl {
 	}
 	
 	public static String creaemprunt(String b,String a) throws FileNotFoundException, IOException, NumberFormatException, SQLException {
+		if (!(b.isBlank() || a.isBlank())) {
 		UtilisateursDao utilisateur2 = new UtilisateursDao(PingJdbc.getConnectionByProperties());
 		ExemplairesDao exemplaire2 = new ExemplairesDao(PingJdbc.getConnectionByProperties());
 		EmpruntEnCoursDao eecd = new EmpruntEnCoursDao(PingJdbc.getConnectionByProperties());
@@ -68,6 +69,8 @@ public class EmprunterCtl {
 			resultat = resultat +"Exemplaire id : "+v.getIdUtil()+"\n";
 		}
 		return resultat;
+		}
+		return "Renseignez les champs ID de l'exemplaire et de l'ID de l'utilisateur s.v.p. !";
 	}
 
 }
