@@ -6,13 +6,21 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public class Personne 
 {
+	@Column
    private String nom;
+	@Column
    private String prenom;
    protected static DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd").withLocale(Locale.FRENCH);
    protected static DateTimeFormatter dfn = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+   @Column
    private String dateNaissance;
+   @Column
    private String sexe;
    
    /**

@@ -6,16 +6,27 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+@Entity
 public class Utilisateur extends Personne
 {
-
+	@Id @GeneratedValue ( strategy =GenerationType.SEQUENCE)
 	private int idUtilisateur;
+	@Column
 	private String pwd;
-	private String pseudonyme;	
+	@Column
+	private String pseudonyme;
 	public static ArrayList<EmpruntEnCours> emprunt = new ArrayList<>();
 	public static DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy",Locale.FRANCE);
+	@Column
 	public EmpruntArchive stock;
+	@Column
 	private EnumCategorieEmploye categorieEmploye;
+	@Column
 	private String categorieUtilisateur = " EMPLOYE";
 
 

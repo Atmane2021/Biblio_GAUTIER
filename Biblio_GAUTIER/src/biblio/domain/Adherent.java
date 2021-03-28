@@ -3,11 +3,19 @@ package biblio.domain;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public class Adherent extends Utilisateur
 {
+	@Column
 	private String telephone;
+	@Column
 	private String cat;
+	@Column
 	public static int nbMaxPrets = 3;
+	@Column
 	public static int dureeMaxPrets =15;	
 		
 	public Adherent(int idUtilisateur,String nom, String prenom,String pwd,String pseudonyme,String dateNaissance,String sexe,String cat, String telephone)

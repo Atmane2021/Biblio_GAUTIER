@@ -1,8 +1,14 @@
 package biblio.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public class Employe extends Utilisateur
 {
+	@Column
 	private String codeMatricule;
+	@Column
 	private EnumCategorieEmploye categorieEmploye;
 	
 	

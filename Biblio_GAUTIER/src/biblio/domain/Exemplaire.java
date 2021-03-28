@@ -6,13 +6,23 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.Locale;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Exemplaire {
+	@Id @GeneratedValue ( strategy =GenerationType.SEQUENCE)
 	private int idExemplaire;
+	@Column
 	private LocalDate dateAchat;
+	@Column
 	private EnumStatusExemplaire status;
 	public DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy",Locale.FRANCE );
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+	@Column
 	private String isbn;
 	
 	public Exemplaire(int idExemplaire,String dateAchat,EnumStatusExemplaire status,String isbn) {

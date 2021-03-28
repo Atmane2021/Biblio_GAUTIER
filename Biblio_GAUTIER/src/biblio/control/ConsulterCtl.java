@@ -4,12 +4,16 @@ import java.awt.HeadlessException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Properties;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 import biblio.dao.EmpruntEnCoursDao;
@@ -18,14 +22,48 @@ import biblio.dao.ExemplairesDao;
 import biblio.dao.PingJdbc;
 import biblio.dao.UtilisateursDao;
 import biblio.domain.Adherent;
-import biblio.domain.EmpruntEnCours;
 import biblio.domain.Exemplaire;
 import biblio.domain.Utilisateur;
 
 
 public class ConsulterCtl {
 
-	public static void main(String[] args) throws HeadlessException, IOException, NumberFormatException, SQLException {
+	public static void main(String[] args) throws HeadlessException, IOException, NumberFormatException, SQLException, ParseException {
+		
+		
+		System.out.println("\n\n-------------Test  : Persistence à la base de données avec le user Bibliothecaire-----------------------\n\n");
+		
+		EntityManagerFactory entityManagerFactory = null;
+        EntityManager entityManager = null;
+        try {
+            entityManagerFactory = Persistence.createEntityManagerFactory("bibliothecaire");
+            entityManager = entityManagerFactory.createEntityManager();
+            
+            System.out.println("\nLISTE DES Adherents :");
+    		System.out.println("-----------------------");
+    		
+    		Adherent a1 = new Adherent(1,"Bichon","Simone","tit","gilou",new SimpleDateFormat("dd/mm/yyyy").parse("04/03/1981").toString(),"F","ADHERENT","0678587896");
+    		Adherent a2 =new Adherent(2,"Abicol","Nicole","hyydd","tylo",new SimpleDateFormat("dd/mm/yyyy").parse("15/12/1951").toString(),"F","ADHERENT","06785814496");
+    		Adherent a3 =new Adherent(3,"Dupuis","Gary","efzrf","okpokpok",new SimpleDateFormat("dd/mm/yyyy").parse("17/10/2000").toString(),"M","ADHERENT","067865487496");
+    		
+    		EntityTransaction trans = entityManager.getTransaction();
+            trans.begin();
+            entityManager.persist(a1);
+            entityManager.persist(a2);
+            entityManager.persist(a3);
+            trans.commit();
+        
+            System.out.println( "- Lecture de tous les Adherents -----------" );
+            
+            List<Adherent> Adherents = entityManager.createQuery( "from Adherent", Adherent.class )
+                                   .getResultList();
+            for (Adherent Adherent : Adherents) {
+                System.out.println( Adherent );
+            }
+        } finally {
+            if ( entityManager != null ) entityManager.close();
+            if ( entityManagerFactory != null ) entityManagerFactory.close();
+        }
 		
 		System.out.println("\n\n-------------Test 2.1 : Connection à la base avec le user Bibliothecaire-----------------------\n\n");
 		int z=0, y=0;

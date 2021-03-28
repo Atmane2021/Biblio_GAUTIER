@@ -4,26 +4,31 @@ package biblio.domain;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 import biblio.dao.ExemplairesDao;
 import biblio.dao.PingJdbc;
 import biblio.dao.UtilisateursDao;
 
-
+@Entity
 public class EmpruntArchive
 {
+	@Column
    private LocalDate dateRestitutionEff;
+	@Column
    private LocalDate dateEmprunt;
+	@OneToOne
    private Utilisateur utilisateur;
+	@OneToOne
    private Exemplaire exemplaire;
 
-   private DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-   
+      
    public EmpruntArchive(EmpruntEnCours ep,String dateRestitutionEff) 
    {
     setDateRestitutionEff(dateRestitutionEff);

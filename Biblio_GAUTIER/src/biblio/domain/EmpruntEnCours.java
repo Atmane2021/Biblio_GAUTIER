@@ -5,13 +5,21 @@ package biblio.domain;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
+@Entity
 public class EmpruntEnCours
 {
+	@OneToOne
    private Utilisateur utilisateur;
+   @Column
    private LocalDate dateEmprunt;
    private DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+   @OneToMany
    private Exemplaire exemplaire;
    
    
